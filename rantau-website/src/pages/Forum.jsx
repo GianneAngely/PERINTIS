@@ -17,12 +17,12 @@ export default function Forum() {
   const [showNewPost, setShowNewPost] = useState(false);
 
   const categories = [
-    { id: "all", label: "All Posts", icon: "📋", count: 1234 },
-    { id: "tips", label: "Tips & Tricks", icon: "💡", count: 456 },
-    { id: "scholarship", label: "Scholarship", icon: "💰", count: 234 },
-    { id: "jobs", label: "Part-time Jobs", icon: "💼", count: 189 },
-    { id: "kost", label: "Kost Reviews", icon: "🏠", count: 345 },
-    { id: "qa", label: "Q&A", icon: "❓", count: 567 },
+    { id: "all", label: "Semua Post", icon: "📋", count: 1234 },
+    { id: "tips", label: "Tips & Trik", icon: "💡", count: 456 },
+    { id: "scholarship", label: "Beasiswa", icon: "💰", count: 234 },
+    { id: "jobs", label: "Kerja Paruh Waktu", icon: "💼", count: 189 },
+    { id: "kost", label: "Review Kost", icon: "🏠", count: 345 },
+    { id: "qa", label: "Tanya Jawab", icon: "❓", count: 567 },
   ];
 
   const posts = [
@@ -31,7 +31,7 @@ export default function Forum() {
       author: {
         name: "Dimas Kurniawan",
         avatar: "DK",
-        role: "Student",
+        role: "Mahasiswa",
         university: "UGM Yogyakarta",
       },
       category: "tips",
@@ -41,7 +41,7 @@ export default function Forum() {
       likes: 124,
       replies: 45,
       views: 1234,
-      time: "2 hours ago",
+      time: "2 jam lalu",
       trending: true,
     },
     {
@@ -49,7 +49,7 @@ export default function Forum() {
       author: {
         name: "Novi Pratiwi",
         avatar: "NP",
-        role: "Student",
+        role: "Mahasiswa",
         university: "UI Jakarta",
       },
       category: "scholarship",
@@ -59,7 +59,7 @@ export default function Forum() {
       likes: 256,
       replies: 89,
       views: 3456,
-      time: "5 hours ago",
+      time: "5 jam lalu",
       trending: true,
     },
     {
@@ -67,7 +67,7 @@ export default function Forum() {
       author: {
         name: "Rina Safitri",
         avatar: "RS",
-        role: "Student",
+        role: "Mahasiswa",
         university: "ITB Bandung",
       },
       category: "jobs",
@@ -77,7 +77,7 @@ export default function Forum() {
       likes: 189,
       replies: 67,
       views: 2341,
-      time: "1 day ago",
+      time: "1 hari lalu",
       trending: false,
     },
     {
@@ -85,7 +85,7 @@ export default function Forum() {
       author: {
         name: "Budi Santoso",
         avatar: "BS",
-        role: "Student",
+        role: "Mahasiswa",
         university: "UNAIR Surabaya",
       },
       category: "kost",
@@ -95,7 +95,7 @@ export default function Forum() {
       likes: 98,
       replies: 34,
       views: 876,
-      time: "2 days ago",
+      time: "2 hari lalu",
       trending: false,
     },
     {
@@ -103,7 +103,7 @@ export default function Forum() {
       author: {
         name: "Amanda Putri",
         avatar: "AP",
-        role: "Student",
+        role: "Mahasiswa",
         university: "UNPAD Bandung",
       },
       category: "qa",
@@ -113,234 +113,256 @@ export default function Forum() {
       likes: 45,
       replies: 23,
       views: 567,
-      time: "3 days ago",
+      time: "3 hari lalu",
       trending: false,
     },
   ];
 
+  const filteredPosts =
+    activeCategory === "all"
+      ? posts
+      : posts.filter((post) => post.category === activeCategory);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1f16] via-[#0a1410] to-[#050a08]">
-      <nav className="bg-forest-dark/50 backdrop-blur-xl border-b border-forest-light/20 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-heading text-xl font-bold text-white">
-                RANTAU
+    <div className="min-h-screen bg-gray-50">
+      <section className="bg-gradient-to-br from-forest-dark via-forest-main to-forest-light py-12 sm:py-16 lg:py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full mb-4">
+              <span className="text-white font-semibold text-xs sm:text-sm">
+                FORUM KOMUNITAS PERANTAU
               </span>
-              <span className="text-forest-pale text-sm">/ Forum</span>
-            </Link>
-            <Link
-              to="/"
-              className="text-gray-400 hover:text-white transition-colors"
+            </div>
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+              Terhubung, Berbagi & Berkembang Bersama
+            </h1>
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto px-4">
+              Bergabung dengan ribuan mahasiswa di seluruh Indonesia
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-3xl mx-auto">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Cari diskusi, topik, atau pertanyaan..."
+                className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl border-2 border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder:text-white/60 focus:outline-none focus:border-white/40 text-sm sm:text-base"
+              />
+            </div>
+            <button
+              onClick={() => setShowNewPost(true)}
+              className="bg-gold hover:bg-gold-light text-forest-dark px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold shadow-xl transition-all flex items-center justify-center gap-2 text-sm sm:text-base whitespace-nowrap"
             >
-              ← Back to Home
-            </Link>
+              <Plus className="w-5 h-5" />
+              <span className="hidden sm:inline">Buat Post Baru</span>
+              <span className="sm:hidden">Post Baru</span>
+            </button>
           </div>
         </div>
-      </nav>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">
-            Forum <span className="text-gold">Rantau</span>
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Connect, share, and grow with thousands of students across Indonesia
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-4 gap-6 mb-8">
-          <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6 sticky top-24">
-              <h3 className="font-bold text-white mb-4 flex items-center gap-2">
-                <Filter className="w-5 h-5" />
-                Categories
-              </h3>
-              <div className="space-y-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${
-                      activeCategory === cat.id
-                        ? "bg-forest-main text-white"
-                        : "bg-white/5 text-gray-400 hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl">{cat.icon}</span>
-                      <span className="font-medium text-sm">{cat.label}</span>
-                    </div>
-                    <span className="text-xs opacity-70">{cat.count}</span>
-                  </button>
-                ))}
-              </div>
-
+      <section className="py-8 sm:py-12 px-4 border-b border-gray-200 bg-white sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            {categories.map((category) => (
               <button
-                onClick={() => setShowNewPost(true)}
-                className="w-full mt-6 bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-forest-dark py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all"
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold transition-all whitespace-nowrap text-xs sm:text-sm ${
+                  activeCategory === category.id
+                    ? "bg-forest-main text-white shadow-lg"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
               >
-                <Plus className="w-5 h-5" />
-                New Post
+                <span className="text-base sm:text-lg">{category.icon}</span>
+                <span className="hidden sm:inline">{category.label}</span>
+                <span className="sm:hidden">
+                  {category.label.split(" ")[0]}
+                </span>
+                <span
+                  className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold ${
+                    activeCategory === category.id
+                      ? "bg-white/20 text-white"
+                      : "bg-gray-200 text-gray-600"
+                  }`}
+                >
+                  {category.count}
+                </span>
               </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8 sm:py-12 lg:py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3">
+            <h2 className="font-heading text-xl sm:text-2xl font-bold text-gray-900">
+              {filteredPosts.length} Diskusi Ditemukan
+            </h2>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <button className="flex-1 sm:flex-none flex items-center gap-2 bg-white border-2 border-gray-200 hover:border-forest-main px-3 sm:px-4 py-2 rounded-lg font-medium text-gray-700 transition-all text-xs sm:text-sm">
+                <Filter className="w-4 h-4" />
+                <span className="hidden sm:inline">Filter</span>
+              </button>
+              <select className="flex-1 sm:flex-none bg-white border-2 border-gray-200 px-3 sm:px-4 py-2 rounded-lg font-medium text-gray-700 focus:outline-none focus:border-forest-main text-xs sm:text-sm">
+                <option>Terbaru</option>
+                <option>Terpopuler</option>
+                <option>Trending</option>
+              </select>
             </div>
           </div>
 
-          <div className="lg:col-span-3">
-            <div className="mb-6">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search discussions..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-forest-pale focus:bg-white/10 transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {posts.map((post) => (
-                <div
-                  key={post.id}
-                  className="bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6 hover:border-forest-pale/40 transition-all cursor-pointer group"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-forest-main to-gold flex items-center justify-center text-white font-bold flex-shrink-0">
-                      {post.author.avatar}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-semibold text-white">
-                          {post.author.name}
-                        </span>
-                        <span className="text-gray-500 text-sm">•</span>
-                        <span className="text-gray-400 text-sm">
-                          {post.author.university}
-                        </span>
-                        <span className="text-gray-500 text-sm">•</span>
-                        <span className="text-gray-400 text-sm flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {post.time}
-                        </span>
-                        {post.trending && (
-                          <span className="bg-gold/20 text-gold px-2 py-0.5 rounded-full text-xs font-semibold flex items-center gap-1">
-                            <TrendingUp className="w-3 h-3" />
-                            Trending
-                          </span>
-                        )}
-                      </div>
-
-                      <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">
-                        {post.title}
+          <div className="space-y-4 sm:space-y-6">
+            {filteredPosts.map((post) => (
+              <div
+                key={post.id}
+                className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-md hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-forest-main/20"
+              >
+                <div className="flex items-start gap-3 sm:gap-4 mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-forest-main to-gold flex items-center justify-center text-white font-bold flex-shrink-0 text-sm sm:text-base">
+                    {post.author.avatar}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                      <h3 className="font-bold text-gray-900 text-sm sm:text-base truncate">
+                        {post.author.name}
                       </h3>
-
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                        {post.excerpt}
-                      </p>
-
-                      <div className="flex items-center gap-6">
-                        <button className="flex items-center gap-2 text-gray-400 hover:text-forest-pale transition-colors">
-                          <ThumbsUp className="w-4 h-4" />
-                          <span className="text-sm font-medium">
-                            {post.likes}
-                          </span>
-                        </button>
-                        <button className="flex items-center gap-2 text-gray-400 hover:text-forest-pale transition-colors">
-                          <MessageCircle className="w-4 h-4" />
-                          <span className="text-sm font-medium">
-                            {post.replies}
-                          </span>
-                        </button>
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Eye className="w-4 h-4" />
-                          <span className="text-sm">{post.views}</span>
-                        </div>
-                      </div>
+                      <span className="text-gray-400 text-xs hidden sm:inline">
+                        •
+                      </span>
+                      <span className="text-xs sm:text-sm text-gray-600 truncate">
+                        {post.author.university}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <Clock className="w-3 h-3" />
+                      <span>{post.time}</span>
+                      {post.trending && (
+                        <>
+                          <span>•</span>
+                          <div className="flex items-center gap-1 text-orange-600 font-semibold">
+                            <TrendingUp className="w-3 h-3" />
+                            <span>Trending</span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-8 flex justify-center">
-              <button className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-6 py-3 rounded-xl font-medium transition-all">
-                Load More Posts
-              </button>
-            </div>
+                <div className="mb-4">
+                  <h2 className="font-bold text-gray-900 text-base sm:text-lg lg:text-xl mb-2 line-clamp-2">
+                    {post.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-gray-600 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600">
+                  <button className="flex items-center gap-1.5 hover:text-forest-main transition-colors">
+                    <ThumbsUp className="w-4 h-4" />
+                    <span className="font-semibold">{post.likes}</span>
+                    <span className="hidden sm:inline">Suka</span>
+                  </button>
+                  <button className="flex items-center gap-1.5 hover:text-blue-600 transition-colors">
+                    <MessageCircle className="w-4 h-4" />
+                    <span className="font-semibold">{post.replies}</span>
+                    <span className="hidden sm:inline">Balasan</span>
+                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <Eye className="w-4 h-4" />
+                    <span className="font-semibold">{post.views}</span>
+                    <span className="hidden sm:inline">Views</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 sm:mt-12 text-center">
+            <button className="bg-forest-main hover:bg-forest-dark text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all text-sm sm:text-base">
+              Muat Lebih Banyak
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
       {showNewPost && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-forest-dark to-forest-main rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-forest-light/20 relative max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setShowNewPost(false)}
-              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                Buat Post Baru
+              </h3>
+              <button
+                onClick={() => setShowNewPost(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
 
-            <h3 className="text-2xl font-bold text-white mb-6">
-              Create New Post
-            </h3>
-
-            <form className="space-y-4">
+            <form className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-medium text-forest-pale mb-2">
-                  Category
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Kategori
                 </label>
-                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-forest-pale">
-                  <option value="tips">💡 Tips & Tricks</option>
-                  <option value="scholarship">💰 Scholarship</option>
-                  <option value="jobs">💼 Part-time Jobs</option>
-                  <option value="kost">🏠 Kost Reviews</option>
-                  <option value="qa">❓ Q&A</option>
+                <select className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-forest-main text-sm sm:text-base">
+                  <option>Pilih Kategori</option>
+                  {categories.slice(1).map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.icon} {cat.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-forest-pale mb-2">
-                  Title
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Judul
                 </label>
                 <input
                   type="text"
-                  placeholder="What's your post about?"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-forest-pale"
+                  placeholder="Tulis judul yang menarik..."
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-forest-main text-sm sm:text-base"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-forest-pale mb-2">
-                  Content
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Konten
                 </label>
                 <textarea
                   rows="6"
-                  placeholder="Share your thoughts, tips, or questions..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-forest-pale resize-none"
+                  placeholder="Bagikan cerita, tips, atau pertanyaan kamu..."
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-forest-main resize-none text-sm sm:text-base"
                 ></textarea>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col-reverse sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={() => setShowNewPost(false)}
-                  className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white py-3 rounded-xl font-medium transition-all"
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold transition-all text-sm sm:text-base"
                 >
-                  Cancel
+                  Batal
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-forest-dark py-3 rounded-xl font-bold transition-all"
+                  className="flex-1 bg-gradient-to-r from-forest-main to-forest-light hover:from-forest-dark hover:to-forest-main text-white px-6 py-3 rounded-xl font-bold transition-all text-sm sm:text-base"
                 >
-                  Post
+                  Posting
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+
+      <div className="h-16 sm:h-0"></div>
     </div>
   );
 }

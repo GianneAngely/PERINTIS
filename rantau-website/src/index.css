@@ -61,14 +61,14 @@
 }
 
 .perspective-container {
-  perspective: 1800px;
+  perspective: 1400px;
   perspective-origin: 50% 50%;
 }
 
 .cylinder-carousel {
   position: relative;
-  width: 250px;
-  height: 380px;
+  width: 120px;
+  height: 180px;
   transform-style: preserve-3d;
   animation: rotateCylinder 40s linear infinite;
 }
@@ -88,8 +88,8 @@
 
 .cylinder-card {
   position: absolute;
-  width: 250px;
-  height: 380px;
+  width: 120px;
+  height: 180px;
   left: 0;
   top: 0;
   transform-style: preserve-3d;
@@ -104,32 +104,93 @@
 }
 
 .cylinder-card:hover .cylinder-card-inner {
-  transform: scale(1.05);
+  transform: scale(1.08);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   z-index: 10;
   position: relative;
 }
 
 @media (min-width: 640px) {
+  .perspective-container {
+    perspective: 1800px;
+  }
+
   .cylinder-carousel {
-    width: 280px;
-    height: 400px;
+    width: 140px;
+    height: 210px;
   }
 
   .cylinder-card {
-    width: 280px;
-    height: 400px;
+    width: 140px;
+    height: 210px;
+    transform: rotateY(calc(var(--rotation) * 1deg)) translateZ(350px) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .perspective-container {
+    perspective: 2000px;
+  }
+
+  .cylinder-carousel {
+    width: 160px;
+    height: 240px;
+  }
+
+  .cylinder-card {
+    width: 160px;
+    height: 240px;
+    transform: rotateY(calc(var(--rotation) * 1deg)) translateZ(400px) !important;
   }
 }
 
 @media (min-width: 1024px) {
+  .perspective-container {
+    perspective: 2200px;
+  }
+
   .cylinder-carousel {
-    width: 300px;
-    height: 420px;
+    width: 180px;
+    height: 270px;
   }
 
   .cylinder-card {
-    width: 300px;
-    height: 420px;
+    width: 180px;
+    height: 270px;
+    transform: rotateY(calc(var(--rotation) * 1deg)) translateZ(450px) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .perspective-container {
+    perspective: 2400px;
+  }
+
+  .cylinder-carousel {
+    width: 200px;
+    height: 300px;
+  }
+
+  .cylinder-card {
+    width: 200px;
+    height: 300px;
+    transform: rotateY(calc(var(--rotation) * 1deg)) translateZ(500px) !important;
+  }
+}
+
+@media (min-width: 1536px) {
+  .perspective-container {
+    perspective: 2600px;
+  }
+
+  .cylinder-carousel {
+    width: 220px;
+    height: 330px;
+  }
+
+  .cylinder-card {
+    width: 220px;
+    height: 330px;
+    transform: rotateY(calc(var(--rotation) * 1deg)) translateZ(550px) !important;
   }
 }
