@@ -1,0 +1,877 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import {
+  Search,
+  Users,
+  Store,
+  Receipt,
+  MessageSquare,
+  ArrowRight,
+  Star,
+  MapPin,
+  Video,
+  CheckCircle,
+  TrendingUp,
+  Shield,
+  Clock,
+  DollarSign,
+  UserCheck,
+  Briefcase,
+  MessageCircle,
+  ThumbsUp,
+  Eye,
+  Smartphone,
+  Globe,
+  BarChart3,
+  Heart,
+  Sparkles,
+  Map,
+  X,
+} from "lucide-react";
+
+export default function Home() {
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizStep, setQuizStep] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState({
+    budget: "",
+    location: "",
+    facilities: [],
+  });
+
+  const carouselItems = [
+    {
+      id: 1,
+      title: "Kost Modern Jakarta",
+      color: "from-forest-dark to-forest-main",
+      location: "Jakarta Selatan",
+    },
+    {
+      id: 2,
+      title: "Kost Minimalis Bali",
+      color: "from-forest-main to-forest-light",
+      location: "Denpasar",
+    },
+    {
+      id: 3,
+      title: "Kost Eksklusif Jogja",
+      color: "from-forest-light to-forest-pale",
+      location: "Yogyakarta",
+    },
+    {
+      id: 4,
+      title: "Kost Premium Bandung",
+      color: "from-gold to-gold-light",
+      location: "Bandung",
+    },
+    {
+      id: 5,
+      title: "Kost Strategis Surabaya",
+      color: "from-forest-pale to-gold",
+      location: "Surabaya",
+    },
+    {
+      id: 6,
+      title: "Kost Nyaman Semarang",
+      color: "from-forest-main to-gold",
+      location: "Semarang",
+    },
+    {
+      id: 7,
+      title: "Kost Lengkap Medan",
+      color: "from-forest-dark to-forest-light",
+      location: "Medan",
+    },
+    {
+      id: 8,
+      title: "Kost Aman Malang",
+      color: "from-gold-light to-forest-pale",
+      location: "Malang",
+    },
+    {
+      id: 9,
+      title: "Kost Elite Makassar",
+      color: "from-forest-light to-gold",
+      location: "Makassar",
+    },
+    {
+      id: 10,
+      title: "Kost Cozy Palembang",
+      color: "from-forest-main to-forest-pale",
+      location: "Palembang",
+    },
+    {
+      id: 11,
+      title: "Kost Smart Bogor",
+      color: "from-forest-dark to-gold",
+      location: "Bogor",
+    },
+    {
+      id: 12,
+      title: "Kost Luxury Bintaro",
+      color: "from-gold to-forest-main",
+      location: "Bintaro",
+    },
+  ];
+
+  const quizQuestions = [
+    {
+      question: "What's your budget range?",
+      options: [
+        { label: "< Rp 1 juta", value: "low" },
+        { label: "Rp 1-2 juta", value: "medium" },
+        { label: "Rp 2-3 juta", value: "high" },
+        { label: "> Rp 3 juta", value: "premium" },
+      ],
+    },
+    {
+      question: "Preferred location?",
+      options: [
+        { label: "Jakarta", value: "jakarta" },
+        { label: "Bandung", value: "bandung" },
+        { label: "Yogyakarta", value: "yogyakarta" },
+        { label: "Surabaya", value: "surabaya" },
+      ],
+    },
+    {
+      question: "Must-have facilities?",
+      options: [
+        { label: "Wi-Fi", value: "wifi" },
+        { label: "AC", value: "ac" },
+        { label: "Laundry", value: "laundry" },
+        { label: "Parking", value: "parking" },
+      ],
+      multiple: true,
+    },
+  ];
+
+  const handleQuizAnswer = (value) => {
+    if (quizStep === 0) {
+      setQuizAnswers({ ...quizAnswers, budget: value });
+    } else if (quizStep === 1) {
+      setQuizAnswers({ ...quizAnswers, location: value });
+    }
+
+    if (quizStep < quizQuestions.length - 1) {
+      setQuizStep(quizStep + 1);
+    } else {
+      setShowQuiz(false);
+      setQuizStep(0);
+    }
+  };
+
+  const toggleFacility = (value) => {
+    const facilities = quizAnswers.facilities.includes(value)
+      ? quizAnswers.facilities.filter((f) => f !== value)
+      : [...quizAnswers.facilities, value];
+    setQuizAnswers({ ...quizAnswers, facilities });
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0a1410]">
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 pb-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0f1f16] via-[#0a1410] to-[#050a08]"></div>
+
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-forest-main/20 rounded-full blur-3xl animate-blob"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mb-16">
+          <div className="inline-block bg-forest-main/10 backdrop-blur-sm border border-forest-main/20 px-5 py-2 rounded-full mb-6">
+            <span className="text-forest-pale font-semibold text-sm">
+              🏠 We build platform that unlock more efficient student life
+            </span>
+          </div>
+
+          <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto">
+            One Click For{" "}
+            <span className="bg-gradient-to-r from-forest-light via-forest-pale to-gold bg-clip-text text-transparent">
+              Perantau Life
+            </span>
+            <br />
+          </h1>
+
+          <p className="text-lg sm:text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+            We handle research, matching, community, bill management, and
+            connection. You drive your journey with a higher success rate.
+          </p>
+
+          <Link
+            to="/register"
+            className="inline-block bg-gradient-to-r from-forest-main to-forest-light hover:from-forest-dark hover:to-forest-main text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl shadow-forest-main/50 transition-all duration-300"
+          >
+            Get started free
+          </Link>
+        </div>
+
+        <div className="relative z-10 w-full h-[500px] flex items-center justify-center perspective-container mt-12">
+          <div className="cylinder-carousel">
+            {carouselItems.map((item, index) => (
+              <div
+                key={item.id}
+                className="cylinder-card"
+                style={{
+                  transform: `rotateY(${index * 30}deg) translateZ(700px)`,
+                }}
+              >
+                <div
+                  className={`cylinder-card-inner bg-gradient-to-br ${item.color} w-full h-full rounded-2xl shadow-2xl flex flex-col justify-between p-5 relative overflow-hidden`}
+                >
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="relative z-10">
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-2 py-1 inline-block mb-3">
+                      <span className="text-white text-[10px] font-semibold">
+                        Featured
+                      </span>
+                    </div>
+                  </div>
+                  <div className="relative z-10">
+                    <h3 className="text-white font-bold text-lg mb-2">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-white/80 text-xs mb-2">
+                      <MapPin className="w-3 h-3" />
+                      <span>{item.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                        <span className="text-white font-semibold text-sm">
+                          4.8
+                        </span>
+                      </div>
+                      <div className="text-white/60 text-xs">• 120 reviews</div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-white/60 text-[10px]">
+                          Mulai dari
+                        </div>
+                        <div className="text-white font-bold text-base">
+                          Rp 1.5jt
+                          <span className="text-xs font-normal">/bln</span>
+                        </div>
+                      </div>
+                      <button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1410] to-[#0f1f16]"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">
+              A better way to be a <span className="text-gold">perantau</span>.
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Designed to be the most intuitive and feature-rich platform for
+              students. Every feature you need with AI-powered intelligence to
+              make your journey easier.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+            <div>
+              <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">
+                Find your perfect kost in seconds
+              </h3>
+              <p className="text-lg text-gray-400 mb-6 leading-relaxed">
+                AI-powered search with advanced filters. Take our quick quiz for
+                personalized recommendations or explore the map to find kost
+                near your campus.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Quick quiz for instant recommendations",
+                  "Interactive map with campus locations",
+                  "Verified listings & real reviews",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-forest-light/20 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-4 h-4 text-forest-pale" />
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-forest-light/20 to-forest-pale/20 blur-3xl rounded-3xl"></div>
+              <div className="relative bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-3xl p-8 shadow-2xl">
+                <div className="bg-[#0a1410] rounded-2xl p-6">
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Search kost location..."
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-forest-pale"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <button
+                      onClick={() => setShowQuiz(true)}
+                      className="bg-gold/20 hover:bg-gold/30 border border-gold/30 text-gold px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Quick Quiz
+                    </button>
+                    <button className="bg-forest-main/20 hover:bg-forest-main/40 border border-forest-main/30 text-forest-pale px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
+                      <Map className="w-4 h-4" />
+                      View Map
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        name: "Kost Modern Jakarta",
+                        price: "Rp 1.5jt",
+                        rating: "4.8",
+                      },
+                      {
+                        name: "Kost Minimalis Bali",
+                        price: "Rp 1.2jt",
+                        rating: "4.9",
+                      },
+                      {
+                        name: "Kost Premium Bandung",
+                        price: "Rp 1.8jt",
+                        rating: "4.7",
+                      },
+                    ].map((kost, i) => (
+                      <div
+                        key={i}
+                        className="bg-white/5 rounded-xl p-3 hover:bg-white/10 transition-all cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-white font-semibold text-sm mb-1">
+                              {kost.name}
+                            </h4>
+                            <div className="flex items-center gap-2">
+                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                              <span className="text-white/80 text-xs">
+                                {kost.rating}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-gold font-bold text-sm">
+                            {kost.price}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-forest-dark/80 via-forest-main/80 to-forest-dark/80 backdrop-blur-xl border border-forest-light/20 rounded-3xl p-8 lg:p-12 mb-20 shadow-2xl">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">
+                  Split Bills & <span className="text-gold">Never Forget</span>
+                </h3>
+                <p className="text-forest-pale text-lg mb-8 leading-relaxed">
+                  Sistem pembagian dan reminder otomatis untuk tagihan bersama.
+                  Tak transparan, dan hassle-free!
+                </p>
+
+                <div className="space-y-4 mb-8">
+                  {[
+                    {
+                      icon: <DollarSign className="w-6 h-6" />,
+                      title: "Easy Bill Splitting",
+                      desc: "Bagi tagihan bulanan secara otomatis dan adil dengan roommate-mu",
+                    },
+                    {
+                      icon: <Clock className="w-6 h-6" />,
+                      title: "Auto Reminder",
+                      desc: "Notifikasi otomatis sebelum jatuh tempo agar tidak telat bayar",
+                    },
+                    {
+                      icon: <Users className="w-6 h-6" />,
+                      title: "Group Management",
+                      desc: "Kelola pengeluaran bersama dan lacak siapa sudah membayar",
+                    },
+                  ].map((feature, index) => (
+                    <div
+                      key={index}
+                      className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 hover:bg-white/15 transition-all"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="bg-gold text-forest-dark p-3 rounded-lg flex-shrink-0">
+                          {feature.icon}
+                        </div>
+                        <div>
+                          <h4 className="text-white font-bold mb-1">
+                            {feature.title}
+                          </h4>
+                          <p className="text-forest-pale text-sm">
+                            {feature.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all">
+                  Try Split Calculator
+                </button>
+              </div>
+
+              <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden">
+                <div className="bg-forest-pale/40 p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h4 className="font-bold text-forest-dark text-xl">
+                      Monthly Bills
+                    </h4>
+                    <span className="bg-gold text-forest-dark px-3 py-1 rounded-full text-sm font-bold">
+                      November 2025
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
+                    {[
+                      {
+                        icon: "⚡",
+                        name: "Listrik",
+                        subtitle: "Split 4 orang",
+                        amount: "Rp 150,000",
+                        status: "Paid",
+                        color: "bg-green-100",
+                      },
+                      {
+                        icon: "💧",
+                        name: "Air",
+                        subtitle: "Split 4 orang",
+                        amount: "Rp 75,000",
+                        status: "Pending",
+                        color: "bg-yellow-100",
+                      },
+                      {
+                        icon: "📡",
+                        name: "WiFi",
+                        subtitle: "Split 4 orang",
+                        amount: "Rp 200,000",
+                        status: "Paid",
+                        color: "bg-green-100",
+                      },
+                      {
+                        icon: "🔥",
+                        name: "Gas",
+                        subtitle: "Split 4 orang",
+                        amount: "Rp 50,000",
+                        status: "Pending",
+                        color: "bg-yellow-100",
+                      },
+                    ].map((bill, i) => (
+                      <div key={i} className={`${bill.color} rounded-xl p-4`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">{bill.icon}</span>
+                            <div>
+                              <div className="font-bold text-forest-dark">
+                                {bill.name}
+                              </div>
+                              <div className="text-xs text-gray-600">
+                                {bill.subtitle}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold text-forest-dark">
+                              {bill.amount}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              {bill.status}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t-2 border-gray-300 pt-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-gray-700 font-medium">
+                        Your Share
+                      </span>
+                      <span className="text-3xl font-bold text-forest-main">
+                        Rp 118,750
+                      </span>
+                    </div>
+                    <button className="w-full bg-forest-main hover:bg-forest-dark text-white py-3 rounded-xl font-bold transition-all">
+                      💳 Pay Now
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-forest-dark/10 px-6 py-4 grid grid-cols-3 gap-4 text-center">
+                  {[
+                    { value: "Rp 2.5M+", label: "Total Bills Managed" },
+                    { value: "98%", label: "On-time Payment Rate" },
+                    { value: "3,500+", label: "Active Users" },
+                  ].map((stat, i) => (
+                    <div key={i}>
+                      <div className="text-xl font-bold text-gold">
+                        {stat.value}
+                      </div>
+                      <div className="text-[10px] text-gray-600 leading-tight">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-forest-pale/10 via-gold/5 to-forest-pale/10 backdrop-blur-xl border border-gold/20 rounded-3xl p-8 lg:p-12 mb-20 shadow-2xl">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">
+                  Empowering <span className="text-gold">UMKM Kost</span> Owners
+                </h3>
+                <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                  Platform khusus untuk pemilik kost dan UMKM lokal. Kelola
+                  properti, promosikan bisnis, dan jangkau lebih banyak
+                  perantau.
+                </p>
+
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  {[
+                    { value: "2,500+", label: "High Rent Kos" },
+                    { value: "850+", label: "UMKM Partners" },
+                    { value: "15K+", label: "Active Users" },
+                  ].map((stat, i) => (
+                    <div key={i} className="text-center">
+                      <div className="text-3xl font-bold text-gold mb-1">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs text-gray-300 leading-tight">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all">
+                  Register Your Business
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: "🏢",
+                    title: "Property Management",
+                    desc: "Dashboard lengkap untuk kelola semua kost dengan mudah dan efisien",
+                  },
+                  {
+                    icon: "📊",
+                    title: "Analytics & Insights",
+                    desc: "Data analytics untuk optimasi bisnis kost dan performa",
+                  },
+                  {
+                    icon: "💳",
+                    title: "Payment Gateway",
+                    desc: "Terima pembayaran online dengan aman dan mudah",
+                  },
+                ].map((feature, i) => (
+                  <div
+                    key={i}
+                    className="bg-white/10 backdrop-blur-sm hover:bg-white/15 border border-white/20 rounded-2xl p-6 transition-all"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="text-4xl">{feature.icon}</div>
+                      <div>
+                        <h4 className="font-bold text-white text-lg mb-1">
+                          {feature.title}
+                        </h4>
+                        <p className="text-gray-300 text-sm">{feature.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+            <div className="order-2 lg:order-1 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-forest-light/20 to-forest-pale/20 blur-3xl rounded-3xl"></div>
+              <div className="relative bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-3xl p-8 shadow-2xl">
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    {
+                      name: "Andi M.",
+                      match: "93%",
+                      color: "from-forest-main to-forest-light",
+                    },
+                    {
+                      name: "Siti R.",
+                      match: "87%",
+                      color: "from-forest-light to-forest-pale",
+                    },
+                    {
+                      name: "Budi S.",
+                      match: "91%",
+                      color: "from-gold to-gold-light",
+                    },
+                    {
+                      name: "Rina P.",
+                      match: "89%",
+                      color: "from-forest-pale to-gold-light",
+                    },
+                  ].map((person, i) => (
+                    <div key={i} className="bg-[#0a1410] rounded-2xl p-4">
+                      <div
+                        className={`w-12 h-12 rounded-full bg-gradient-to-r ${person.color} mb-3`}
+                      ></div>
+                      <div className="text-white font-semibold mb-1">
+                        {person.name}
+                      </div>
+                      <div className="text-gold font-bold text-xl">
+                        {person.match}
+                      </div>
+                      <div className="text-gray-500 text-xs">Match Score</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">
+                Find your perfect roommate
+              </h3>
+              <p className="text-lg text-gray-400 mb-6 leading-relaxed">
+                Let AI find your compatible roommate. Add preferences, lifestyle
+                habits, and personality traits. Our system matches you with the
+                perfect living partner.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "AI-powered compatibility matching",
+                  "Verified student profiles only",
+                  "Safe in-app messaging system",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-forest-light/20 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-4 h-4 text-forest-pale" />
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">
+                Join the forum rantau
+              </h3>
+              <p className="text-lg text-gray-400 mb-6 leading-relaxed">
+                Connect with thousands of students. Share experiences, get tips,
+                find scholarships, and discover part-time job opportunities—all
+                in one supportive community.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Share tips & experiences",
+                  "Find scholarships & job info",
+                  "Connect with fellow students",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-forest-main/20 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-4 h-4 text-forest-pale" />
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-forest-main/20 to-forest-pale/20 blur-3xl rounded-3xl"></div>
+              <div className="relative bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-main/20 rounded-3xl p-8 shadow-2xl">
+                <div className="space-y-4">
+                  {[
+                    {
+                      user: "Dimas K.",
+                      title: "Tips Hemat di Jogja",
+                      likes: 24,
+                      replies: 12,
+                      time: "2h ago",
+                    },
+                    {
+                      user: "Novi P.",
+                      title: "Info Beasiswa LPDP",
+                      likes: 45,
+                      replies: 28,
+                      time: "5h ago",
+                    },
+                    {
+                      user: "Rina S.",
+                      title: "Part-time Remote Jobs",
+                      likes: 31,
+                      replies: 18,
+                      time: "1d ago",
+                    },
+                  ].map((post, i) => (
+                    <div
+                      key={i}
+                      className="bg-[#0a1410] rounded-2xl p-4 hover:bg-[#0f1f16] transition-all cursor-pointer"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-forest-main to-gold flex-shrink-0"></div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-white font-semibold text-sm">
+                              {post.user}
+                            </span>
+                            <span className="text-gray-500 text-xs">
+                              • {post.time}
+                            </span>
+                          </div>
+                          <h4 className="text-white font-medium mb-2">
+                            {post.title}
+                          </h4>
+                          <div className="flex items-center gap-4 text-xs text-gray-400">
+                            <span className="flex items-center gap-1">
+                              <ThumbsUp className="w-3 h-3" /> {post.likes}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <MessageCircle className="w-3 h-3" />{" "}
+                              {post.replies}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 relative">
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="bg-gradient-to-r from-forest-main to-forest-light rounded-3xl p-12 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
+            <div className="relative z-10">
+              <h2 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">
+                Ready to start your perantau journey?
+              </h2>
+              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Get ready to grow with smart connections. Join 10,000+ students
+                who trust RANTAU for their migration journey.
+              </p>
+              <Link
+                to="/register"
+                className="inline-flex items-center gap-2 bg-white text-forest-dark px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-white/50 transition-all"
+              >
+                Get started today
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-forest-dark to-forest-main rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-forest-light/20 relative">
+            <button
+              onClick={() => {
+                setShowQuiz(false);
+                setQuizStep(0);
+              }}
+              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-2xl font-bold text-white">
+                  Quick Preference Quiz
+                </h3>
+                <span className="text-gold font-semibold">
+                  {quizStep + 1}/{quizQuestions.length}
+                </span>
+              </div>
+              <div className="w-full bg-white/10 rounded-full h-2">
+                <div
+                  className="bg-gold h-2 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${((quizStep + 1) / quizQuestions.length) * 100}%`,
+                  }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h4 className="text-xl text-white font-semibold mb-6">
+                {quizQuestions[quizStep].question}
+              </h4>
+              <div className="grid grid-cols-2 gap-4">
+                {quizQuestions[quizStep].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (quizQuestions[quizStep].multiple) {
+                        toggleFacility(option.value);
+                      } else {
+                        handleQuizAnswer(option.value);
+                      }
+                    }}
+                    className={`p-4 rounded-xl font-medium transition-all ${
+                      quizQuestions[quizStep].multiple &&
+                      quizAnswers.facilities.includes(option.value)
+                        ? "bg-gold text-forest-dark"
+                        : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {quizQuestions[quizStep].multiple && (
+              <button
+                onClick={() => {
+                  if (quizStep < quizQuestions.length - 1) {
+                    setQuizStep(quizStep + 1);
+                  } else {
+                    setShowQuiz(false);
+                    setQuizStep(0);
+                  }
+                }}
+                className="w-full bg-gold hover:bg-gold-light text-forest-dark py-3 rounded-xl font-bold transition-all"
+              >
+                Continue
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="h-16 sm:h-0"></div>
+    </div>
+  );
+}
