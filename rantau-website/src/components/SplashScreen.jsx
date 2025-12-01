@@ -30,7 +30,7 @@ export default function SplashScreen({ onFinish }) {
               : "opacity-0 scale-50 rotate-180"
           }`}
         >
-          <div className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto">
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto">
             {/* Animated circles behind logo */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-gold to-gold-light animate-ping opacity-75"></div>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-gold to-gold-light opacity-90"></div>
