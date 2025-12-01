@@ -30,6 +30,8 @@ export default {
         "spin-slow": "spin 20s linear infinite",
         "spin-slow-reverse": "spin 25s linear infinite reverse",
         float: "float 3s ease-in-out infinite",
+        drawLine: "drawLine 2s ease-out forwards",
+        fadeIn: "fadeIn 1.5s ease-out forwards",
       },
       keyframes: {
         blob: {
@@ -52,6 +54,24 @@ export default {
           },
           "50%": {
             transform: "translateY(-20px)",
+          },
+        },
+        drawLine: {
+          from: {
+            strokeDasharray: "1000",
+            strokeDashoffset: "1000",
+          },
+          to: {
+            strokeDasharray: "1000",
+            strokeDashoffset: "0",
+          },
+        },
+        fadeIn: {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1",
           },
         },
       },
