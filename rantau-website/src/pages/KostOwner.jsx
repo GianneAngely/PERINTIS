@@ -11,37 +11,42 @@ import {
   Edit,
   Trash2,
   BarChart3,
+  ChevronDown,
 } from "lucide-react";
 
 export default function KostOwner() {
   const stats = [
     {
-      label: "Total Properties",
+      label: "Total Properti",
       value: "12",
-      icon: <Home className="w-6 h-6" />,
-      color: "from-forest-main to-forest-light",
+      icon: <Home className="w-5 h-5 sm:w-6 sm:h-6" />,
+      color: "from-green-600 to-green-700",
       change: "+2 this month",
+      changeLabel: "+2 bulan ini",
     },
     {
-      label: "Total Revenue",
-      value: "Rp 48.5M",
-      icon: <DollarSign className="w-6 h-6" />,
-      color: "from-gold to-gold-light",
+      label: "Rp 48.5M",
+      sublabel: "Total Revenue",
+      icon: <DollarSign className="w-5 h-5 sm:w-6 sm:h-6" />,
+      color: "from-yellow-500 to-yellow-600",
       change: "+12% from last month",
+      changeLabel: "+12% dari bulan lalu",
     },
     {
-      label: "Occupancy Rate",
-      value: "94%",
-      icon: <Users className="w-6 h-6" />,
-      color: "from-forest-light to-forest-pale",
+      label: "94%",
+      sublabel: "Occupancy Rate",
+      icon: <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6" />,
+      color: "from-blue-500 to-blue-600",
       change: "+3% improvement",
+      changeLabel: "+3% peningkatan",
     },
     {
-      label: "Total Views",
-      value: "15.2K",
-      icon: <Eye className="w-6 h-6" />,
-      color: "from-forest-pale to-gold",
+      label: "15.2K",
+      sublabel: "Total Views",
+      icon: <Eye className="w-5 h-5 sm:w-6 sm:h-6" />,
+      color: "from-purple-500 to-purple-600",
       change: "+8% this week",
+      changeLabel: "+8% minggu ini",
     },
   ];
 
@@ -50,266 +55,274 @@ export default function KostOwner() {
       id: 1,
       name: "Kost Modern Jakarta Selatan",
       location: "Jakarta Selatan",
-      rooms: 20,
-      occupied: 18,
-      price: "Rp 2.5jt",
+      gradient: "from-forest-dark to-forest-main",
+      rooms: { occupied: 18, total: 20 },
+      price: "Rp 4.5M",
       rating: 4.8,
       reviews: 124,
-      image: "from-purple-500 to-pink-500",
       revenue: "Rp 4.5M",
-      status: "active",
+      status: "Active",
     },
     {
       id: 2,
       name: "Kost Minimalis Bali",
       location: "Denpasar, Bali",
-      rooms: 15,
-      occupied: 14,
-      price: "Rp 2.0jt",
+      gradient: "from-forest-main to-forest-light",
+      rooms: { occupied: 14, total: 15 },
+      price: "Rp 4.2M",
       rating: 4.9,
-      reviews: 98,
-      image: "from-blue-500 to-cyan-500",
-      revenue: "Rp 3.0M",
-      status: "active",
+      reviews: 89,
+      revenue: "Rp 2.0M",
+      status: "Active",
     },
     {
       id: 3,
       name: "Kost Premium Bandung",
       location: "Bandung",
-      rooms: 25,
-      occupied: 23,
-      price: "Rp 1.8jt",
+      gradient: "from-forest-light to-forest-pale",
+      rooms: { occupied: 23, total: 26 },
+      price: "Rp 4.1M",
       rating: 4.7,
       reviews: 156,
-      image: "from-green-500 to-emerald-500",
       revenue: "Rp 4.1M",
-      status: "active",
+      status: "Active",
     },
     {
       id: 4,
       name: "Kost Strategis Jogja",
       location: "Yogyakarta",
-      rooms: 18,
-      occupied: 15,
-      price: "Rp 1.5jt",
+      gradient: "from-gold to-gold-light",
+      rooms: { occupied: 15, total: 18 },
+      price: "Rp 3.7M",
       rating: 4.6,
-      reviews: 89,
-      image: "from-orange-500 to-red-500",
-      revenue: "Rp 2.7M",
-      status: "active",
+      reviews: 92,
+      revenue: "Rp 3.7M",
+      status: "Active",
+    },
+  ];
+
+  const quickActions = [
+    {
+      label: "Add New Property",
+      labelId: "Tambah Properti Baru",
+      icon: <Plus className="w-5 h-5" />,
+      color: "from-yellow-500 to-yellow-600",
+      link: "/add-property",
+    },
+    {
+      label: "View Analytics",
+      labelId: "Lihat Analitik",
+      icon: <BarChart3 className="w-5 h-5" />,
+      color: "from-blue-500 to-blue-600",
+      link: "/analytics",
+    },
+    {
+      label: "Manage Tenants",
+      labelId: "Kelola Penyewa",
+      icon: <Users className="w-5 h-5" />,
+      color: "from-green-500 to-green-600",
+      link: "/tenants",
+    },
+    {
+      label: "Payment History",
+      labelId: "Riwayat Pembayaran",
+      icon: <DollarSign className="w-5 h-5" />,
+      color: "from-purple-500 to-purple-600",
+      link: "/payments",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1f16] via-[#0a1410] to-[#050a08]">
-      <nav className="bg-forest-dark/50 backdrop-blur-xl border-b border-forest-light/20 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-heading text-xl font-bold text-white">
-                RANTAU
-              </span>
-              <span className="text-forest-pale text-sm">/ Kost Owner</span>
-            </Link>
-            <div className="flex items-center gap-4">
-              <button className="bg-gradient-to-r from-gold to-gold-light hover:from-gold-light hover:to-gold text-forest-dark px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all">
-                <Plus className="w-5 h-5" />
-                Add Property
-              </button>
-              <Link
-                to="/"
-                className="text-gray-400 hover:text-white transition-colors"
+    <div className="min-h-screen bg-white">
+      <section className="bg-gradient-to-br from-[#1a3a2e] via-[#2d5a45] to-[#1a3a2e] py-8 sm:py-12 lg:py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-6 sm:mb-8">
+            <div className="text-sm text-green-300 mb-2">
+              RANTAU / <span className="text-white">Kost Owner</span>
+            </div>
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
+              Kost Owner <span className="text-yellow-400">Dashboard</span>
+            </h1>
+            <p className="text-base sm:text-lg text-green-200">
+              Kelola properti dan kembangkan bisnis Anda
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="bg-[#2d5a45] rounded-2xl p-4 sm:p-6 border border-green-700/30 hover:border-green-500/50 transition-all"
               >
-                ← Back to Home
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-2">
-            Kost Owner <span className="text-gold">Dashboard</span>
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Manage your properties and grow your business
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6 hover:border-forest-pale/40 transition-all"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className={`bg-gradient-to-r ${stat.color} p-3 rounded-xl text-white`}
-                >
-                  {stat.icon}
-                </div>
-                <span className="text-forest-pale text-xs font-medium">
-                  {stat.change}
-                </span>
-              </div>
-              <div className="text-3xl font-bold text-white mb-1">
-                {stat.value}
-              </div>
-              <div className="text-gray-400 text-sm">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2 bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-white">Revenue Overview</h3>
-              <select className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
-                <option>Last 7 days</option>
-                <option>Last 30 days</option>
-                <option>Last 3 months</option>
-              </select>
-            </div>
-            <div className="h-64 flex items-end justify-between gap-2">
-              {[65, 78, 82, 70, 88, 92, 85].map((height, i) => (
-                <div
-                  key={i}
-                  className="flex-1 flex flex-col items-center gap-2"
-                >
+                <div className="flex items-start justify-between mb-3">
                   <div
-                    className="w-full bg-gradient-to-t from-gold to-gold-light rounded-t-lg transition-all hover:from-gold-light hover:to-gold"
-                    style={{ height: `${height}%` }}
-                  ></div>
-                  <span className="text-xs text-gray-400">
-                    {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][i]}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6">
-            <h3 className="text-xl font-bold text-white mb-6">Quick Actions</h3>
-            <div className="space-y-3">
-              {[
-                {
-                  icon: <Plus className="w-5 h-5" />,
-                  label: "Add New Property",
-                  color: "from-gold to-gold-light",
-                },
-                {
-                  icon: <BarChart3 className="w-5 h-5" />,
-                  label: "View Analytics",
-                  color: "from-forest-main to-forest-light",
-                },
-                {
-                  icon: <Users className="w-5 h-5" />,
-                  label: "Manage Tenants",
-                  color: "from-forest-light to-forest-pale",
-                },
-                {
-                  icon: <DollarSign className="w-5 h-5" />,
-                  label: "Payment History",
-                  color: "from-forest-pale to-gold",
-                },
-              ].map((action, i) => (
-                <button
-                  key={i}
-                  className="w-full flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-white transition-all group"
-                >
-                  <div
-                    className={`bg-gradient-to-r ${action.color} p-2 rounded-lg`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-lg`}
                   >
-                    {action.icon}
+                    {stat.icon}
                   </div>
-                  <span className="font-medium group-hover:text-gold transition-colors">
-                    {action.label}
-                  </span>
+                  {index === 0 && (
+                    <span className="text-xs text-green-300">
+                      {stat.changeLabel}
+                    </span>
+                  )}
+                  {index > 0 && (
+                    <span className="text-xs text-green-300">
+                      {stat.changeLabel}
+                    </span>
+                  )}
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                  {stat.label}
+                </div>
+                {stat.sublabel && (
+                  <div className="text-xs sm:text-sm text-green-300">
+                    {stat.sublabel}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8 sm:py-12 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 bg-[#2d5a45] rounded-3xl p-6 sm:p-8 border border-green-700/30">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-white">
+                  Revenue Overview
+                </h2>
+                <button className="flex items-center gap-2 bg-[#1a3a2e] text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-[#152d24] transition-all">
+                  Last 7 days
+                  <ChevronDown className="w-4 h-4" />
                 </button>
-              ))}
+              </div>
+              <div className="h-64 sm:h-80 flex items-end justify-between gap-2 sm:gap-4 px-2">
+                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                  (day, i) => (
+                    <div
+                      key={day}
+                      className="flex-1 flex flex-col items-center"
+                    >
+                      <div
+                        className="w-full bg-gradient-to-t from-green-400 to-green-300 rounded-t-lg hover:from-green-500 hover:to-green-400 transition-all cursor-pointer"
+                        style={{
+                          height: `${[60, 80, 70, 90, 75, 85, 95][i]}%`,
+                        }}
+                      ></div>
+                      <span className="text-green-300 text-xs mt-2">{day}</span>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div className="bg-[#2d5a45] rounded-3xl p-6 sm:p-8 border border-green-700/30">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
+                Quick Actions
+              </h2>
+              <div className="space-y-3">
+                {quickActions.map((action, index) => (
+                  <Link
+                    key={index}
+                    to={action.link}
+                    className="flex items-center gap-3 bg-[#1a3a2e] hover:bg-[#234439] p-4 rounded-xl transition-all group"
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}
+                    >
+                      {action.icon}
+                    </div>
+                    <span className="text-white font-semibold text-sm sm:text-base">
+                      {action.labelId}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="bg-gradient-to-br from-forest-dark/60 to-forest-main/40 backdrop-blur-xl border border-forest-light/20 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-white">Your Properties</h3>
-            <div className="flex items-center gap-3">
-              <select className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
-                <option>All Status</option>
-                <option>Active</option>
-                <option>Full</option>
-                <option>Maintenance</option>
-              </select>
-            </div>
+      <section className="py-8 sm:py-12 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              Your Properties
+            </h2>
+            <button className="flex items-center gap-2 bg-forest-main hover:bg-forest-dark text-white px-4 py-2 rounded-lg text-sm transition-all">
+              All Status
+              <ChevronDown className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {properties.map((property) => (
               <div
                 key={property.id}
-                className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-forest-pale/40 transition-all group"
+                className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all border-2 border-gray-200 hover:border-forest-main/30"
               >
-                <div
-                  className={`h-32 bg-gradient-to-br ${property.image} relative`}
-                >
-                  <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <span className="text-white text-xs font-semibold capitalize">
-                      {property.status}
-                    </span>
+                <div className="relative h-48 sm:h-56 overflow-hidden">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${property.gradient}`}
+                  ></div>
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                    {property.status}
                   </div>
                 </div>
 
-                <div className="p-5">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h4 className="font-bold text-white text-lg mb-1 group-hover:text-gold transition-colors">
-                        {property.name}
-                      </h4>
-                      <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-                        <MapPin className="w-4 h-4" />
-                        <span>{property.location}</span>
+                <div className="p-5 sm:p-6">
+                  <div className="mb-4">
+                    <h3 className="font-bold text-gray-900 text-lg sm:text-xl mb-1">
+                      {property.name}
+                    </h3>
+                    <div className="flex items-center gap-2 text-gray-600 text-sm">
+                      <MapPin className="w-4 h-4" />
+                      <span>{property.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-4">
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <span className="text-gray-900 font-semibold">
+                      {property.rating}
+                    </span>
+                    <span className="text-gray-600 text-sm">
+                      {property.reviews} reviews
+                    </span>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-gray-600 text-xs mb-1">Rooms</div>
+                        <div className="text-gray-900 font-bold text-lg">
+                          {property.rooms.occupied}/{property.rooms.total}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                          <span className="text-white font-semibold text-sm">
-                            {property.rating}
-                          </span>
-                          <span className="text-gray-400 text-xs">
-                            ({property.reviews})
-                          </span>
+                      <div>
+                        <div className="text-gray-600 text-xs mb-1">
+                          Revenue
+                        </div>
+                        <div className="text-gold font-bold text-lg">
+                          {property.revenue}
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-white/5 rounded-lg p-3">
-                      <div className="text-gray-400 text-xs mb-1">Rooms</div>
-                      <div className="text-white font-bold">
-                        {property.occupied}/{property.rooms}
-                      </div>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-3">
-                      <div className="text-gray-400 text-xs mb-1">Revenue</div>
-                      <div className="text-gold font-bold text-sm">
-                        {property.revenue}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button className="flex-1 bg-forest-main hover:bg-forest-dark text-white py-2 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2">
+                  <div className="flex gap-3">
+                    <button className="flex-1 bg-forest-main hover:bg-forest-dark text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2">
                       <Edit className="w-4 h-4" />
                       Edit
                     </button>
-                    <button className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white py-2 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2">
+                    <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2">
                       <Eye className="w-4 h-4" />
                       View
                     </button>
-                    <button className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 p-2 rounded-lg transition-all">
+                    <button className="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -318,7 +331,9 @@ export default function KostOwner() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      <div className="h-16 sm:h-0"></div>
     </div>
   );
 }
