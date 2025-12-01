@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -8,8 +9,22 @@ import TagihanKost from "./pages/TagihanKost";
 import Forum from "./pages/Forum";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import SplashScreen from "./components/SplashScreen"; // ← ADD THIS
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true); // ← ADD THIS
+
+  const handleSplashFinish = () => {
+    // ← ADD THIS
+    setShowSplash(false);
+  };
+
+  // Show splash screen on first load
+  if (showSplash) {
+    // ← ADD THIS
+    return <SplashScreen onFinish={handleSplashFinish} />;
+  }
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />

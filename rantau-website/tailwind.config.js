@@ -1,37 +1,25 @@
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        forest: {
-          dark: "#1a4d2e",
-          main: "#2d6a4f",
-          light: "#52b788",
-          pale: "#95d5b2",
-        },
-        gold: {
-          DEFAULT: "#d4af37",
-          light: "#f0d98f",
-        },
+        "forest-dark": "#1a3a2e",
+        "forest-main": "#2d5f3f",
+        "forest-light": "#4a8b5f",
+        "forest-pale": "#7cb98f",
+        gold: "#d4af37",
+        "gold-light": "#f0d78c",
       },
       fontFamily: {
-        sans: ["Montserrat", "sans-serif"],
         heading: ["Poppins", "sans-serif"],
-      },
-      borderRadius: {
-        card: "12px",
-      },
-      boxShadow: {
-        card: "0 2px 8px rgba(0,0,0,0.08)",
-        "card-hover": "0 4px 16px rgba(0,0,0,0.12)",
       },
       animation: {
         blob: "blob 7s infinite",
-        "spin-slow": "spin 20s linear infinite",
-        "spin-slow-reverse": "spin 25s linear infinite reverse",
-        float: "float 3s ease-in-out infinite",
-        drawLine: "drawLine 2s ease-out forwards",
-        fadeIn: "fadeIn 1.5s ease-out forwards",
+        "bounce-slow": "bounce 3s infinite",
+        fadeIn: "fadeIn 0.8s ease-in forwards",
+        stroke: "stroke 1s ease-in-out forwards",
+        fill: "fill 0.6s ease-in-out forwards",
       },
       keyframes: {
         blob: {
@@ -48,30 +36,30 @@ export default {
             transform: "translate(0px, 0px) scale(1)",
           },
         },
-        float: {
-          "0%, 100%": {
-            transform: "translateY(0px)",
+        fadeIn: {
+          "0%": {
+            opacity: "0",
           },
-          "50%": {
-            transform: "translateY(-20px)",
+          "100%": {
+            opacity: "1",
           },
         },
-        drawLine: {
-          from: {
-            strokeDasharray: "1000",
-            strokeDashoffset: "1000",
+        stroke: {
+          "0%": {
+            strokeDashoffset: "300",
           },
-          to: {
-            strokeDasharray: "1000",
+          "100%": {
             strokeDashoffset: "0",
           },
         },
-        fadeIn: {
-          from: {
+        fill: {
+          "0%": {
             opacity: "0",
+            transform: "scale(0.8)",
           },
-          to: {
+          "100%": {
             opacity: "1",
+            transform: "scale(1)",
           },
         },
       },
