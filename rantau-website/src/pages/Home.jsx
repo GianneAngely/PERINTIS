@@ -435,9 +435,12 @@ export default function Home() {
                         Rp 118,750
                       </span>
                     </div>
-                    <button className="w-full bg-forest-main hover:bg-forest-dark text-white py-3 rounded-xl font-bold transition-all">
+                    <Link
+                      to="/tagihan-kost"
+                      className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all inline-block"
+                    >
                       Pay Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
 
