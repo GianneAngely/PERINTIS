@@ -10,9 +10,9 @@ export default function Header() {
     { path: "/", label: "Beranda" },
     { path: "/smart-kost-finder", label: "Cari Kost" },
     { path: "/roommate", label: "Roommate" },
-    { path: "/kost-owner", label: "Pemilik Kost" },
-    { path: "/tagihan-kost", label: "Tagihan" },
     { path: "/forum", label: "Forum" },
+    { path: "/tagihan-kost", label: "Tagihan" },
+    { path: "/kost-owner", label: "Kost Owner" },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -25,11 +25,11 @@ export default function Header() {
             <img
               src="/logo rantau baru-nobg.png"
               alt="RANTAU Logo"
-              className="h-10 w-auto"
+              className="h-16 w-auto"
             />
-            <span className="font-heading text-2xl font-bold text-forest-dark">
-              RANTAU
-            </span>
+            {/* <span className="font-heading text-2xl font-bold text-forest-dark"> */}
+            {/*   RANTAU */}
+            {/* </span> */}
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
