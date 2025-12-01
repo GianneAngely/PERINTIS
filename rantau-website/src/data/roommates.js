@@ -1,4 +1,4 @@
-const roommates = [
+export const roommates = [
   {
     id: 1,
     name: "Ayu Kartika",
