@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { kosts } from "../data/kosts";
@@ -28,116 +28,116 @@ function MapUpdater({ center, zoom }) {
   return null;
 }
 
-function RantauLoadingAnimation() {
+function ImprovedLoadingAnimation() {
   return (
-    <div className="flex flex-col items-center justify-center gap-8">
-      <motion.div
-        animate={{ x: [-30, 30, -30] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="relative"
-      >
-        <svg
-          width="140"
-          height="140"
-          viewBox="0 0 140 140"
-          className="drop-shadow-2xl"
-        >
-          <motion.g
-            animate={{ rotate: [0, -8, 8, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
-          >
-            ircle cx="70" cy="35" r="18" fill="#2D6A4F" />
-            <ellipse cx="65" cy="33" rx="3" ry="4" fill="white" opacity="0.9" />
-            <ellipse cx="75" cy="33" rx="3" ry="4" fill="white" opacity="0.9" />
-            <path
-              d="M 60 42 Q 70 48 80 42"
-              stroke="#1a4d2e"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <rect x="58" y="53" width="24" height="40" rx="6" fill="#2D6A4F" />
-            <motion.rect
-              x="52"
-              y="60"
-              width="10"
-              height="25"
-              rx="5"
-              fill="#2D6A4F"
-              animate={{ rotate: [0, -15, 15, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              style={{ transformOrigin: "57px 60px" }}
-            />
-            <motion.rect
-              x="78"
-              y="60"
-              width="10"
-              height="25"
-              rx="5"
-              fill="#2D6A4F"
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              style={{ transformOrigin: "83px 60px" }}
-            />
-            <rect x="60" y="88" width="10" height="28" rx="5" fill="#2D6A4F" />
-            <rect x="70" y="88" width="10" height="28" rx="5" fill="#2D6A4F" />
-            <ellipse cx="65" cy="117" rx="6" ry="3" fill="#1a4d2e" />
-            <ellipse cx="75" cy="117" rx="6" ry="3" fill="#1a4d2e" />
-          </motion.g>
-          <motion.g
-            animate={{ rotate: [0, 25, -25, 0], y: [0, -3, 3, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ transformOrigin: "100px 100px" }}
-          >
-            <rect
-              x="88"
-              y="88"
-              width="24"
-              height="32"
-              rx="3"
-              fill="#D4AF37"
-              stroke="#2D6A4F"
-              strokeWidth="2.5"
-            />
-            <rect x="92" y="92" width="16" height="3" rx="1" fill="#2D6A4F" />
-            <rect x="92" y="100" width="16" height="3" rx="1" fill="#2D6A4F" />
-            <rect x="92" y="108" width="16" height="3" rx="1" fill="#2D6A4F" />
-            ircle cx="100" cy="82" r="3.5" fill="#2D6A4F" />
-            <line
-              x1="85"
-              y1="95"
-              x2="88"
-              y2="95"
-              stroke="#2D6A4F"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            ircle cx="94" cy="122" r="4.5" fill="#1a4d2e" /> ircle cx="106"
-            cy="122" r="4.5" fill="#1a4d2e" />
-          </motion.g>
-        </svg>
-      </motion.div>
-      <div className="text-center space-y-4">
+    <div className="flex flex-col items-center justify-center gap-12 px-6">
+      <div className="relative">
         <motion.div
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-6xl"
+          className="relative z-10"
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
-          🔍
+          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-gold via-gold-light to-white shadow-2xl flex items-center justify-center">
+            <motion.div
+              className="w-24 h-24 rounded-full bg-gradient-to-br from-forest-main via-forest-light to-forest-pale flex items-center justify-center"
+              animate={{
+                rotate: [0, -180, -360],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <span className="text-4xl">🏠</span>
+            </motion.div>
+          </div>
         </motion.div>
-        <h3 className="text-3xl md:text-4xl font-black text-white drop-shadow-lg">
-          Lagi nyariin kost yang cocok...
-        </h3>
-        <p className="text-lg text-white/90 font-semibold drop-shadow">
-          Tunggu sebentar, ya! ✨
-        </p>
-        <div className="flex items-center justify-center gap-2 pt-2">
-          {[0, 1, 2].map((i) => (
+
+        <motion.div
+          className="absolute inset-0 rounded-full bg-gradient-to-r from-gold to-forest-light opacity-30 blur-2xl"
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full bg-gradient-to-br from-gold to-white shadow-lg"
+            style={{
+              originX: 0.5,
+              originY: 0.5,
+            }}
+            animate={{
+              x: [0, Math.cos((i * Math.PI) / 4) * 80, 0],
+              y: [0, Math.sin((i * Math.PI) / 4) * 80, 0],
+              scale: [0, 1, 0],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="text-center space-y-6 max-w-md">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 10, -10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+          }}
+          className="text-7xl"
+        >
+          ✨
+        </motion.div>
+
+        <div className="space-y-3">
+          <h3 className="text-4xl md:text-5xl font-black text-white drop-shadow-2xl leading-tight">
+            Lagi nyari kost <span className="text-gold">terbaik</span> buat
+            kamu...
+          </h3>
+          <p className="text-xl text-white/95 font-bold drop-shadow-lg">
+            Tunggu sebentar, ya! 🎯
+          </p>
+        </div>
+
+        <div className="flex items-center justify-center gap-3 pt-4">
+          {[0, 1, 2, 3].map((i) => (
             <motion.div
               key={i}
-              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.25 }}
-              className="w-4 h-4 rounded-full bg-gold shadow-lg"
+              animate={{
+                y: [0, -20, 0],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut",
+              }}
+              className="w-5 h-5 rounded-full bg-gradient-to-br from-gold via-white to-gold shadow-xl"
             />
           ))}
         </div>
@@ -146,15 +146,16 @@ function RantauLoadingAnimation() {
   );
 }
 
-function SpotlightAnimation({ kost, onComplete }) {
+function SpotlightAnimation({ topKosts, onComplete, onSelectKost }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-gradient-to-br from-forest-main/95 via-forest-dark/95 to-forest-light/95 backdrop-blur-xl flex items-center justify-center p-6"
+      className="fixed inset-0 z-[9999] bg-gradient-to-br from-forest-main/95 via-forest-dark/95 to-forest-light/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto"
     >
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30" />
+
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: [0, 3, 2], opacity: [0, 0.9, 0] }}
@@ -166,86 +167,368 @@ function SpotlightAnimation({ kost, onComplete }) {
           filter: "blur(40px)",
         }}
       />
-      <motion.div
-        initial={{ y: -100, opacity: 0, scale: 0.5 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        transition={{
-          delay: 0.5,
-          duration: 0.8,
-          type: "spring",
-          stiffness: 200,
-        }}
-        className="relative z-10 text-center space-y-6 max-w-2xl"
-      >
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto py-8">
         <motion.div
-          animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-9xl drop-shadow-2xl"
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-center mb-8"
         >
-          ✨
-        </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="text-5xl md:text-7xl font-heading font-black text-gold drop-shadow-2xl leading-tight"
-        >
-          Ini Dia!
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-          className="text-2xl md:text-3xl text-white font-bold drop-shadow-lg"
-        >
-          Kost yang cocok banget buat kamu
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 1.4, type: "spring" }}
-          className="bg-white/95 backdrop-blur rounded-3xl p-6 shadow-2xl mt-8"
-        >
-          <p className="text-xl font-black text-forest-dark mb-2">
-            {kost.name}
+          <motion.div
+            animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-8xl mb-6 drop-shadow-2xl"
+          >
+            ✨
+          </motion.div>
+          <h2 className="text-5xl md:text-7xl font-heading font-black text-gold drop-shadow-2xl leading-tight mb-4">
+            Ini Dia Top 3 Kost!
+          </h2>
+          <p className="text-2xl md:text-3xl text-white font-bold drop-shadow-lg">
+            Pilih yang paling cocok buat kamu
           </p>
-          <p className="text-sm text-gray-600 mb-4">📍 {kost.address}</p>
-          <div className="flex items-center justify-center gap-4">
-            <span className="px-4 py-2 rounded-full bg-gold text-forest-dark font-bold text-sm">
-              ⭐ {kost.rating}
-            </span>
-            <span className="px-4 py-2 rounded-full bg-forest-main text-white font-bold text-sm">
-              Rp {(kost.pricePerMonth / 1000000).toFixed(1)} jt/bln
-            </span>
-          </div>
         </motion.div>
-        <motion.button
+
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          {topKosts.map((kost, idx) => (
+            <motion.div
+              key={kost.id}
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                delay: 0.8 + idx * 0.2,
+                type: "spring",
+                stiffness: 200,
+              }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              onClick={() => onSelectKost(kost)}
+              className="bg-white/98 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl cursor-pointer group relative"
+            >
+              {idx === 0 && (
+                <div className="absolute top-4 right-4 z-10 px-4 py-2 rounded-full bg-gradient-to-r from-gold via-gold-light to-gold text-forest-dark font-black text-sm shadow-lg flex items-center gap-2">
+                  <span className="text-lg">👑</span> Best Match
+                </div>
+              )}
+
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={kost.photos[0]}
+                  alt={kost.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute top-4 left-4 flex gap-2">
+                  <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur text-xs font-black text-forest-dark">
+                    {kost.category}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-gold/95 backdrop-blur text-xs font-black text-forest-dark">
+                    ⭐ {kost.rating}
+                  </span>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-xl font-black text-white drop-shadow-lg line-clamp-2 mb-1">
+                    {kost.name}
+                  </h3>
+                  <p className="text-sm text-white/90 font-semibold drop-shadow flex items-center gap-1">
+                    <span>📍</span> {kost.city}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-4">
+                <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
+                  <p className="text-xs text-gray-600 font-bold mb-1">
+                    💰 Harga per bulan
+                  </p>
+                  <p className="text-3xl font-black text-forest-dark">
+                    Rp {(kost.pricePerMonth / 1000000).toFixed(1)} jt
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span className="font-bold">
+                    📏{" "}
+                    {kost.distanceMeters < 1000
+                      ? `${kost.distanceMeters}m`
+                      : `${(kost.distanceMeters / 1000).toFixed(1)}km`}
+                  </span>
+                  <span>dari {kost.campusNearby}</span>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {kost.facilities.slice(0, 4).map((f) => (
+                    <span
+                      key={f}
+                      className="px-2.5 py-1 rounded-lg bg-forest-pale/30 text-xs font-bold text-forest-dark border border-forest-pale/40"
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSelectKost(kost);
+                  }}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-forest-main to-forest-light text-white font-black rounded-2xl shadow-lg hover:shadow-2xl transition-all"
+                >
+                  Lihat Detail Lengkap →
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.8 }}
-          onClick={onComplete}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="mt-8 px-10 py-5 bg-gradient-to-r from-gold via-gold-light to-gold text-forest-dark text-xl font-black rounded-2xl shadow-2xl hover:shadow-gold/50 transition-all"
+          transition={{ delay: 2 }}
+          className="text-center"
         >
-          Lihat Detail Lengkap →
-        </motion.button>
-      </motion.div>
+          <motion.button
+            onClick={onComplete}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-12 py-5 bg-white/20 backdrop-blur-md border-2 border-white/40 text-white text-lg font-black rounded-2xl shadow-xl hover:bg-white/30 transition-all"
+          >
+            Lihat Semua Kost →
+          </motion.button>
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
 
-function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
-  const [mapCenter] = useState([-2.5489, 118.0149]);
+function ChatModal({ kost, onClose }) {
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      from: "owner",
+      text: `Halo! Terima kasih sudah tertarik dengan ${kost.name}. Ada yang bisa saya bantu?`,
+      time: "Baru saja",
+    },
+  ]);
+  const [inputText, setInputText] = useState("");
+
+  const quickReplies = [
+    "Apakah masih ada kamar kosong?",
+    "Bagaimana cara pembayarannya?",
+    "Boleh lihat kamarnya dulu?",
+    "Kapan bisa pindah?",
+  ];
+
+  const handleSendMessage = (text) => {
+    if (!text.trim()) return;
+
+    const newUserMessage = {
+      id: messages.length + 1,
+      from: "user",
+      text: text,
+      time: "Baru saja",
+    };
+
+    setMessages((prev) => [...prev, newUserMessage]);
+    setInputText("");
+
+    setTimeout(() => {
+      let responseText =
+        "Terima kasih atas pertanyaannya! Pemilik kost akan segera merespon. 😊";
+
+      if (
+        text.toLowerCase().includes("kosong") ||
+        text.toLowerCase().includes("kamar")
+      ) {
+        responseText = `Saat ini tersedia ${kost.availableRooms} kamar kosong di ${kost.name}. Mau langsung survey?`;
+      } else if (
+        text.toLowerCase().includes("bayar") ||
+        text.toLowerCase().includes("harga")
+      ) {
+        responseText = `Harga kost Rp ${kost.pricePerMonth.toLocaleString(
+          "id-ID"
+        )}/bulan. Bisa bayar bulanan atau 3 bulanan dengan diskon 5%! 💰`;
+      } else if (
+        text.toLowerCase().includes("lihat") ||
+        text.toLowerCase().includes("survey")
+      ) {
+        responseText =
+          "Boleh banget! Kapan mau ke lokasi? Saya bisa atur jadwal survey hari ini atau besok. 🏠";
+      } else if (
+        text.toLowerCase().includes("pindah") ||
+        text.toLowerCase().includes("kapan")
+      ) {
+        responseText =
+          "Bisa pindah kapan saja! Kalau sudah deal, biasanya bisa langsung pindah dalam 1-2 hari. ✨";
+      }
+
+      const ownerResponse = {
+        id: messages.length + 2,
+        from: "owner",
+        text: responseText,
+        time: "Baru saja",
+      };
+
+      setMessages((prev) => [...prev, ownerResponse]);
+    }, 1000);
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm"
+      className="fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
     >
-      <div className="absolute top-4 right-4 z-[70] flex gap-3">
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-3xl w-full max-w-2xl h-[600px] shadow-2xl flex flex-col overflow-hidden"
+      >
+        <div className="bg-gradient-to-r from-forest-main to-forest-light text-white p-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-2xl">
+              👤
+            </div>
+            <div>
+              <h3 className="font-black text-lg">{kost.owner}</h3>
+              <p className="text-xs text-white/80 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                Online
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all"
+          >
+            <span className="text-xl font-bold">✕</span>
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
+          {messages.map((msg) => (
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`flex ${
+                msg.from === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`max-w-[75%] rounded-2xl px-5 py-3 ${
+                  msg.from === "user"
+                    ? "bg-gradient-to-r from-forest-main to-forest-light text-white"
+                    : "bg-white shadow-md text-gray-800"
+                }`}
+              >
+                <p className="text-sm font-semibold leading-relaxed">
+                  {msg.text}
+                </p>
+                <p
+                  className={`text-xs mt-1 ${
+                    msg.from === "user" ? "text-white/70" : "text-gray-500"
+                  }`}
+                >
+                  {msg.time}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="p-4 bg-white border-t border-gray-200 space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {quickReplies.map((reply) => (
+              <motion.button
+                key={reply}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleSendMessage(reply)}
+                className="px-4 py-2 rounded-full bg-forest-pale/30 text-forest-dark text-xs font-bold hover:bg-forest-pale/50 transition-all border border-forest-pale/40"
+              >
+                {reply}
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyPress={(e) =>
+                e.key === "Enter" && handleSendMessage(inputText)
+              }
+              placeholder="Ketik pesan..."
+              className="flex-1 px-5 py-3 rounded-2xl border-2 border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all font-semibold text-sm"
+            />
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleSendMessage(inputText)}
+              className="w-12 h-12 rounded-2xl bg-gradient-to-r from-gold to-gold-light text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
+              </svg>
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+function FullscreenMapModal({
+  kosts,
+  onClose,
+  onSelectKost,
+  initialSelectedKost = null,
+}) {
+  const [mapCenter] = useState([-2.5489, 118.0149]);
+  const [selectedKost, setSelectedKost] = useState(initialSelectedKost);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const handleKostSelect = (kost) => {
+    setSelectedKost(kost);
+  };
+
+  const handleViewDetail = (kost) => {
+    onSelectKost(kost);
+    onClose();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm"
+    >
+      <div className="absolute top-4 right-4 z-[10001] flex gap-3">
         <button
           onClick={onClose}
           className="px-6 py-3 bg-white/95 backdrop-blur rounded-2xl text-forest-dark font-black shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
@@ -253,7 +536,8 @@ function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
           ← Kembali
         </button>
       </div>
-      <div className="w-full h-full">
+
+      <div className="w-full h-full relative">
         <MapContainer
           center={mapCenter}
           zoom={5}
@@ -269,6 +553,9 @@ function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
               key={kost.id}
               position={[kost.coords.lat, kost.coords.lng]}
               icon={customIcon}
+              eventHandlers={{
+                click: () => handleKostSelect(kost),
+              }}
             >
               <Popup>
                 <div className="text-xs space-y-3 p-3 min-w-[250px]">
@@ -298,10 +585,7 @@ function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
                     </p>
                   </div>
                   <button
-                    onClick={() => {
-                      onSelectKost(kost);
-                      onClose();
-                    }}
+                    onClick={() => handleViewDetail(kost)}
                     className="w-full px-4 py-2.5 bg-gradient-to-r from-forest-main to-forest-light text-white text-xs font-black rounded-xl hover:shadow-lg transition-all"
                   >
                     Lihat Detail Lengkap →
@@ -311,12 +595,252 @@ function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
             </Marker>
           ))}
         </MapContainer>
+
+        <AnimatePresence>
+          {selectedKost && (
+            <>
+              {isMobile ? (
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                  className="absolute bottom-0 left-0 right-0 z-[10000] bg-white rounded-t-3xl shadow-2xl max-h-[70vh] overflow-y-auto border-t-4 border-gold"
+                >
+                  <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                    <h3 className="text-lg font-black text-forest-dark pr-4 line-clamp-1">
+                      {selectedKost.name}
+                    </h3>
+                    <button
+                      onClick={() => setSelectedKost(null)}
+                      className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition-all flex-shrink-0"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <div className="p-6 space-y-4 bg-white">
+                    <div className="relative h-48 rounded-2xl overflow-hidden">
+                      <img
+                        src={selectedKost.photos[0]}
+                        alt={selectedKost.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <span className="absolute top-3 right-3 px-4 py-2 rounded-full bg-gold text-forest-dark font-bold text-sm shadow-lg">
+                        ⭐ {selectedKost.rating}
+                      </span>
+                    </div>
+
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-600 flex items-start gap-2">
+                        <svg
+                          className="w-5 h-5 text-gold flex-shrink-0 mt-0.5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span className="font-medium">
+                          {selectedKost.address}, {selectedKost.city}
+                        </span>
+                      </p>
+
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="px-3 py-1.5 rounded-full bg-forest-pale/50 text-forest-dark text-xs font-bold">
+                          {selectedKost.category}
+                        </span>
+                        <span className="px-3 py-1.5 rounded-full bg-gold/20 text-gold text-xs font-bold">
+                          📍{" "}
+                          {selectedKost.distanceMeters < 1000
+                            ? `${selectedKost.distanceMeters}m`
+                            : `${(selectedKost.distanceMeters / 1000).toFixed(
+                                1
+                              )}km`}
+                        </span>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
+                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                          💰 Harga per bulan
+                        </p>
+                        <p className="text-3xl font-black text-forest-dark">
+                          Rp {(selectedKost.pricePerMonth / 1000000).toFixed(1)}{" "}
+                          jt
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          ✨ Fasilitas
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedKost.facilities.slice(0, 6).map((f) => (
+                            <span
+                              key={f}
+                              className="px-3 py-1.5 rounded-lg bg-forest-pale/30 text-xs font-bold text-forest-dark border border-forest-pale/40"
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          🏷️ Tags
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedKost.environmentTags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-3 py-1.5 rounded-full bg-gold/10 text-xs font-bold text-gold border border-gold/30"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => handleViewDetail(selectedKost)}
+                        className="w-full btn-primary py-4 text-base font-black rounded-xl mt-4 shadow-lg"
+                      >
+                        Lihat Detail Lengkap →
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  className="absolute left-4 top-20 bottom-4 w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gold/30 z-[10000] flex flex-col"
+                >
+                  <div className="flex items-start justify-between p-5 border-b border-gray-200 flex-shrink-0 bg-white">
+                    <h3 className="text-lg font-black text-forest-dark pr-2 line-clamp-2 flex-1">
+                      {selectedKost.name}
+                    </h3>
+                    <button
+                      onClick={() => setSelectedKost(null)}
+                      className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm transition-all flex-shrink-0 ml-2"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-white">
+                    <div className="relative h-48 rounded-2xl overflow-hidden">
+                      <img
+                        src={selectedKost.photos[0]}
+                        alt={selectedKost.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <span className="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-gold text-forest-dark font-bold text-xs">
+                        ⭐ {selectedKost.rating}
+                      </span>
+                    </div>
+
+                    <div className="space-y-3">
+                      <p className="text-xs text-gray-600 flex items-start gap-2">
+                        <svg
+                          className="w-4 h-4 text-gold flex-shrink-0 mt-0.5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span className="font-medium">
+                          {selectedKost.address}, {selectedKost.city}
+                        </span>
+                      </p>
+
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1.5 rounded-full bg-forest-pale/50 text-forest-dark text-xs font-bold">
+                          {selectedKost.category}
+                        </span>
+                        <span className="px-3 py-1.5 rounded-full bg-gold/20 text-gold text-xs font-bold">
+                          📍{" "}
+                          {selectedKost.distanceMeters < 1000
+                            ? `${selectedKost.distanceMeters}m`
+                            : `${(selectedKost.distanceMeters / 1000).toFixed(
+                                1
+                              )}km`}
+                        </span>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
+                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                          💰 Harga per bulan
+                        </p>
+                        <p className="text-2xl font-black text-forest-dark">
+                          Rp {(selectedKost.pricePerMonth / 1000000).toFixed(1)}{" "}
+                          jt
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          ✨ Fasilitas
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedKost.facilities.slice(0, 6).map((f) => (
+                            <span
+                              key={f}
+                              className="px-2.5 py-1 rounded-lg bg-forest-pale/30 text-[10px] font-bold text-forest-dark border border-forest-pale/40"
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          🏷️ Tags
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedKost.environmentTags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-1 rounded-full bg-gold/10 text-[10px] font-bold text-gold border border-gold/30"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => handleViewDetail(selectedKost)}
+                        className="w-full btn-primary py-3 text-sm font-black rounded-xl mt-4"
+                      >
+                        Lihat Detail Lengkap →
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
 }
 
-function KostDetailModal({ kost, onClose }) {
+function KostDetailModal({ kost, onClose, onOpenChat }) {
   if (!kost) return null;
 
   return (
@@ -475,6 +999,7 @@ function KostDetailModal({ kost, onClose }) {
           </div>
           <div className="grid md:grid-cols-2 gap-4 pt-4">
             <motion.button
+              onClick={() => onOpenChat(kost)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-primary py-4 text-base font-black rounded-2xl shadow-lg flex items-center justify-center gap-2"
@@ -494,14 +1019,13 @@ function KostDetailModal({ kost, onClose }) {
     </motion.div>
   );
 }
-
 export default function SmartKostFinder() {
   const [surveyMode, setSurveyMode] = useState(false);
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState({});
   const [showLoading, setShowLoading] = useState(false);
   const [showSpotlight, setShowSpotlight] = useState(false);
-  const [perfectMatch, setPerfectMatch] = useState(null);
+  const [topMatches, setTopMatches] = useState([]);
   const [selectedCampus, setSelectedCampus] = useState("Semua kampus");
   const [category, setCategory] = useState("Semua");
   const [maxPrice, setMaxPrice] = useState(2000000);
@@ -513,6 +1037,7 @@ export default function SmartKostFinder() {
   const [mapZoom, setMapZoom] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+  const [chatKost, setChatKost] = useState(null);
 
   const surveyQuestions = [
     {
@@ -690,8 +1215,11 @@ export default function SmartKostFinder() {
         setShowLoading(true);
         setTimeout(() => {
           setShowLoading(false);
-          const match = filteredKosts[0] || kosts[0];
-          setPerfectMatch(match);
+          const top3 =
+            filteredKosts.slice(0, 3).length > 0
+              ? filteredKosts.slice(0, 3)
+              : kosts.slice(0, 3);
+          setTopMatches(top3);
           setShowSpotlight(true);
         }, 4000);
       }, 400);
@@ -716,6 +1244,11 @@ export default function SmartKostFinder() {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
+  };
+
+  const handleOpenChat = (kost) => {
+    setChatKost(kost);
+    setSelectedKost(null);
   };
 
   return (
@@ -1041,7 +1574,7 @@ export default function SmartKostFinder() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="absolute left-4 top-4 bottom-4 w-80 bg-white/98 backdrop-blur-lg rounded-2xl shadow-2xl p-5 overflow-y-auto border-2 border-gold/30 z-[400]"
+                    className="absolute left-4 top-4 bottom-4 w-80 bg-white rounded-2xl shadow-2xl p-5 overflow-y-auto border-2 border-gold/30 z-[400]"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <h3 className="text-lg font-black text-forest-dark pr-2 line-clamp-2">
@@ -1238,7 +1771,7 @@ export default function SmartKostFinder() {
                           <motion.button
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedKost(kost);
+                              setChatKost(kost);
                             }}
                             whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
                             whileTap={{ scale: 0.9 }}
@@ -1416,15 +1949,15 @@ export default function SmartKostFinder() {
                               onClick={() => handleMultipleSelect(opt.value)}
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
-                              className={`px-3 sm:px-4 py-3 sm:py-4 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+                              className={`px-3 sm:px-4 py-3 sm:py-4 rounded-xl text-xs sm:text-sm font-bold transition-all border-2 ${
                                 isSelected
-                                  ? "bg-gradient-to-r from-forest-main to-forest-light text-white shadow-lg border-2 border-forest-main"
-                                  : "bg-white border-2 border-gray-200 text-gray-700 hover:border-forest-pale"
+                                  ? "bg-gradient-to-r from-forest-main to-forest-light text-white border-forest-main shadow-lg"
+                                  : "bg-white text-gray-700 border-gray-200 hover:border-gold"
                               }`}
                             >
-                              <span className="text-xl sm:text-2xl mb-1 sm:mb-2 block">
+                              <div className="text-xl sm:text-2xl mb-1">
                                 {opt.icon}
-                              </span>
+                              </div>
                               {opt.label}
                             </motion.button>
                           );
@@ -1432,14 +1965,17 @@ export default function SmartKostFinder() {
                       </div>
                       <motion.button
                         onClick={() =>
-                          handleSurveyAnswer(surveyAnswers[currentQuestion.id])
-                        }
-                        disabled={
-                          !(surveyAnswers[currentQuestion.id]?.length > 0)
+                          handleSurveyAnswer(
+                            surveyAnswers[currentQuestion.id] || []
+                          )
                         }
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full mt-4 px-6 py-3.5 sm:py-4 bg-gradient-to-r from-gold to-gold-light text-forest-dark text-sm sm:text-base font-black rounded-2xl shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="w-full mt-4 px-6 py-4 bg-gradient-to-r from-gold to-gold-light text-white text-base font-black rounded-2xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={
+                          !surveyAnswers[currentQuestion.id] ||
+                          surveyAnswers[currentQuestion.id].length === 0
+                        }
                       >
                         Lanjut →
                       </motion.button>
@@ -1458,35 +1994,37 @@ export default function SmartKostFinder() {
           animate={{ opacity: 1 }}
           className="fixed inset-0 z-50 bg-gradient-to-br from-forest-dark/95 via-forest-main/95 to-forest-light/95 backdrop-blur-xl flex items-center justify-center"
         >
-          <RantauLoadingAnimation />
+          <ImprovedLoadingAnimation />
         </motion.div>
       )}
 
       <AnimatePresence>
-        {showSpotlight && perfectMatch && (
+        {showSpotlight && topMatches.length > 0 && (
           <SpotlightAnimation
-            kost={perfectMatch}
-            onComplete={() => {
+            topKosts={topMatches}
+            onComplete={() => setShowSpotlight(false)}
+            onSelectKost={(kost) => {
               setShowSpotlight(false);
-              setSurveyMode(false);
+              setSelectedKost(kost);
             }}
           />
         )}
-      </AnimatePresence>
-
-      {selectedKost && (
-        <KostDetailModal
-          kost={selectedKost}
-          onClose={() => setSelectedKost(null)}
-        />
-      )}
-
-      <AnimatePresence>
+        {selectedKost && (
+          <KostDetailModal
+            kost={selectedKost}
+            onClose={() => setSelectedKost(null)}
+            onOpenChat={handleOpenChat}
+          />
+        )}
+        {chatKost && (
+          <ChatModal kost={chatKost} onClose={() => setChatKost(null)} />
+        )}
         {showFullscreenMap && (
           <FullscreenMapModal
             kosts={filteredKosts}
             onClose={() => setShowFullscreenMap(false)}
             onSelectKost={setSelectedKost}
+            initialSelectedKost={sidebarKost}
           />
         )}
       </AnimatePresence>
@@ -1495,27 +2033,22 @@ export default function SmartKostFinder() {
         .forest-map-filter {
           filter: hue-rotate(40deg) saturate(1.8) brightness(0.9) contrast(1.1);
         }
-
         .custom-marker {
           background: transparent !important;
           border: none !important;
         }
-
         ::-webkit-scrollbar {
           width: 8px;
           height: 8px;
         }
-
         ::-webkit-scrollbar-track {
           background: #f1f1f1;
           border-radius: 10px;
         }
-
         ::-webkit-scrollbar-thumb {
           background: linear-gradient(180deg, #d4af37, #f4d03f);
           border-radius: 10px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
           background: linear-gradient(180deg, #b8941f, #d4af37);
         }
