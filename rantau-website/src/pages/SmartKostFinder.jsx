@@ -1277,20 +1277,47 @@ export default function SmartKostFinder() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 z-40 bg-gradient-to-br from-forest-main/95 via-forest-light/95 to-gold/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[9000] bg-gradient-to-br from-forest-main/95 via-forest-light/95 to-gold/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
         >
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30" />
-          <div className="relative max-w-2xl w-full">
-            <button
-              onClick={() => setSurveyMode(false)}
-              className="absolute -top-2 right-0 sm:-top-4 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 hover:scale-110 transition-all font-bold text-xl shadow-lg"
-            >
-              ✕
-            </button>
+
+          <div className="relative max-w-2xl w-full my-auto">
+            <div className="flex items-center justify-between mb-6">
+              <motion.button
+                onClick={() => {
+                  if (surveyStep > 0) {
+                    setSurveyStep((s) => s - 1);
+                  } else {
+                    setSurveyMode(false);
+                    setSurveyStep(0);
+                    setSurveyAnswers({});
+                  }
+                }}
+                whileHover={{ scale: 1.05, x: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-5 py-3 rounded-xl bg-white/20 backdrop-blur-md text-white font-black text-sm hover:bg-white/30 transition-all shadow-lg flex items-center gap-2"
+              >
+                ← {surveyStep > 0 ? "Kembali" : "Batal"}
+              </motion.button>
+
+              <motion.button
+                onClick={() => {
+                  setSurveyMode(false);
+                  setSurveyStep(0);
+                  setSurveyAnswers({});
+                }}
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition-all font-bold text-xl shadow-lg"
+              >
+                ✕
+              </motion.button>
+            </div>
+
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white/98 backdrop-blur-xl rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl"
             >
               <div className="mb-6 sm:mb-8">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
@@ -1312,6 +1339,7 @@ export default function SmartKostFinder() {
                     </div>
                   </div>
                 </div>
+
                 <div className="w-full h-2.5 sm:h-3 rounded-full bg-gray-200 mb-6 sm:mb-8 overflow-hidden shadow-inner">
                   <motion.div
                     initial={{ width: 0 }}
@@ -1325,6 +1353,7 @@ export default function SmartKostFinder() {
                   />
                 </div>
               </div>
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentQuestion.id}
@@ -1337,6 +1366,7 @@ export default function SmartKostFinder() {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-black text-forest-dark leading-tight">
                     {currentQuestion.question}
                   </h2>
+
                   {currentQuestion.type === "select" && (
                     <div className="max-w-md">
                       <SearchableSelect
@@ -1347,6 +1377,7 @@ export default function SmartKostFinder() {
                       />
                     </div>
                   )}
+
                   {currentQuestion.type === "choice" && (
                     <div className="space-y-3">
                       {currentQuestion.options.map((opt, idx) => (
@@ -1365,6 +1396,7 @@ export default function SmartKostFinder() {
                       ))}
                     </div>
                   )}
+
                   {currentQuestion.type === "multiple" && (
                     <div className="space-y-4">
                       <p className="text-xs sm:text-sm text-gray-600 font-semibold">
@@ -1412,14 +1444,6 @@ export default function SmartKostFinder() {
                         Lanjut →
                       </motion.button>
                     </div>
-                  )}
-                  {surveyStep > 0 && (
-                    <button
-                      onClick={() => setSurveyStep((s) => s - 1)}
-                      className="text-forest-main hover:text-forest-dark font-bold hover:underline text-sm"
-                    >
-                      ← Kembali
-                    </button>
                   )}
                 </motion.div>
               </AnimatePresence>
