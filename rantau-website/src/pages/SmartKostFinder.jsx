@@ -9,52 +9,17 @@ import L from "leaflet";
 const customIcon = new L.DivIcon({
   className: "custom-marker",
   html: `
-    <div style="position: relative; width: 50px; height: 60px;">
-      <div style="
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40px;
-        height: 50px;
-        background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
-        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 88%, 18% 100%, 0% 38%);
-        filter: drop-shadow(0 4px 12px rgba(212,175,55,0.6));
-        animation: bounce 2s infinite;
-      "></div>
-      <div style="
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 20px;
-        height: 20px;
-        background: #2D6A4F;
-        border-radius: 50%;
-        border: 3px solid white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      "></div>
-      <div style="
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 30px;
-        height: 8px;
-        background: radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%);
-        border-radius: 50%;
-      "></div>
+    <div style="position: relative; width: 40px; height: 48px;">
+      <svg width="40" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#D4AF37" stroke="#2D6A4F" stroke-width="2"/>
+        ircle cx="12" cy="9" r="3" fill="#2D6A4F"/>
+      </svg>
+      <div style="position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 20px; height: 6px; background: radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%); border-radius: 50%;"></div>
     </div>
-    <style>
-      @keyframes bounce {
-        0%, 100% { transform: translateX(-50%) translateY(0); }
-        50% { transform: translateX(-50%) translateY(-8px); }
-      }
-    </style>
   `,
-  iconSize: [50, 60],
-  iconAnchor: [25, 60],
-  popupAnchor: [0, -60],
+  iconSize: [40, 48],
+  iconAnchor: [20, 48],
+  popupAnchor: [0, -48],
 });
 
 function MapUpdater({ center, zoom }) {
@@ -309,7 +274,7 @@ function FullscreenMapModal({ kosts, onClose, onSelectKost }) {
                 <div className="text-xs space-y-3 p-3 min-w-[250px]">
                   <div className="relative h-32 rounded-xl overflow-hidden">
                     <img
-                      src={`https://picsum.photos/seed/${kost.id}/400/300`}
+                      src={kost.photos[0]}
                       alt={kost.name}
                       className="w-full h-full object-cover"
                     />
@@ -372,7 +337,7 @@ function KostDetailModal({ kost, onClose }) {
       >
         <div className="relative h-80 overflow-hidden">
           <img
-            src={`https://picsum.photos/seed/${kost.id}/1200/800`}
+            src={kost.photos[0]}
             alt={kost.name}
             className="w-full h-full object-cover"
           />
@@ -546,6 +511,8 @@ export default function SmartKostFinder() {
   const [sidebarKost, setSidebarKost] = useState(null);
   const [mapCenter, setMapCenter] = useState([-2.5489, 118.0149]);
   const [mapZoom, setMapZoom] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const surveyQuestions = [
     {
@@ -673,19 +640,45 @@ export default function SmartKostFinder() {
     []
   );
 
+  const allTags = useMemo(() => {
+    const tags = new Set();
+    kosts.forEach((k) => k.environmentTags.forEach((tag) => tags.add(tag)));
+    return Array.from(tags);
+  }, []);
+
   const filteredKosts = useMemo(() => {
     let list = [...kosts];
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      list = list.filter(
+        (k) =>
+          k.name.toLowerCase().includes(query) ||
+          k.city.toLowerCase().includes(query) ||
+          k.address.toLowerCase().includes(query) ||
+          k.campusNearby.toLowerCase().includes(query)
+      );
+    }
+
     if (selectedCampus !== "Semua kampus")
       list = list.filter((k) => k.campusNearby === selectedCampus);
     if (category !== "Semua")
       list = list.filter((k) => k.category === category);
     list = list.filter((k) => k.pricePerMonth <= maxPrice);
+
+    if (selectedTags.length > 0) {
+      list = list.filter((k) =>
+        selectedTags.every((tag) => k.environmentTags.includes(tag))
+      );
+    }
+
     if (sortBy === "harga")
       list.sort((a, b) => a.pricePerMonth - b.pricePerMonth);
     else if (sortBy === "rating") list.sort((a, b) => b.rating - a.rating);
     else list.sort((a, b) => a.distanceMeters - b.distanceMeters);
+
     return list;
-  }, [selectedCampus, category, maxPrice, sortBy]);
+  }, [selectedCampus, category, maxPrice, sortBy, searchQuery, selectedTags]);
 
   const handleSurveyAnswer = (value) => {
     setSurveyAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
@@ -719,12 +712,17 @@ export default function SmartKostFinder() {
     setMapZoom(15);
   };
 
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-forest-pale/20 via-white to-gold/5 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(45,106,79,0.06),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_75%,rgba(212,175,55,0.05),transparent_50%)]" />
 
-      {/* Floating particles */}
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
@@ -814,9 +812,61 @@ export default function SmartKostFinder() {
               <h3 className="text-lg font-black text-forest-dark flex items-center gap-3">
                 <span className="text-2xl">🎛️</span>Filter Cepat
               </h3>
+
               <div className="space-y-4">
                 <label className="block text-xs font-black text-gray-600 uppercase tracking-wider">
-                  Kampus terdekat
+                  🔍 Cari Manual
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Cari nama kost atau lokasi..."
+                    className="w-full px-4 py-3 pr-10 rounded-xl border-2 border-forest-pale/30 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all text-sm font-semibold"
+                  />
+                  <svg
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <label className="block text-xs font-black text-gray-600 uppercase tracking-wider">
+                  🏷️ Filter by Tags
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {allTags.map((tag) => (
+                    <motion.button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${
+                        selectedTags.includes(tag)
+                          ? "bg-gradient-to-r from-gold to-gold-light text-white shadow-lg"
+                          : "bg-forest-pale/20 text-forest-dark hover:bg-forest-pale/40 border border-forest-pale/40"
+                      }`}
+                    >
+                      {tag}
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <label className="block text-xs font-black text-gray-600 uppercase tracking-wider">
+                  🎓 Kampus terdekat
                 </label>
                 <SearchableSelect
                   options={campuses}
@@ -825,9 +875,10 @@ export default function SmartKostFinder() {
                   placeholder="Pilih kampus..."
                 />
               </div>
+
               <div className="space-y-4">
                 <label className="block text-xs font-black text-gray-600 uppercase tracking-wider">
-                  Jenis kost
+                  🚻 Jenis kost
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {["Semua", "Putra", "Putri", "Campuran"].map((cat) => (
@@ -847,10 +898,11 @@ export default function SmartKostFinder() {
                   ))}
                 </div>
               </div>
+
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <label className="text-xs font-black text-gray-600 uppercase tracking-wider">
-                    Budget maksimal
+                    💰 Budget maksimal
                   </label>
                   <span className="text-base font-black text-gold">
                     Rp {maxPrice.toLocaleString("id-ID")}
@@ -865,28 +917,34 @@ export default function SmartKostFinder() {
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
                   className="w-full h-3 rounded-full accent-gold cursor-pointer"
                 />
+                <div className="flex justify-between text-xs text-gray-500 font-semibold">
+                  <span>500K</span>
+                  <span>3jt</span>
+                </div>
               </div>
+
               <div className="space-y-4">
                 <label className="block text-xs font-black text-gray-600 uppercase tracking-wider">
-                  Urutkan
+                  📊 Urutkan
                 </label>
                 <div className="grid gap-2">
                   {[
-                    { value: "terdekat", label: "📍 Terdekat" },
-                    { value: "harga", label: "💰 Termurah" },
-                    { value: "rating", label: "⭐ Rating tinggi" },
+                    { value: "terdekat", label: "📍 Terdekat", icon: "📍" },
+                    { value: "harga", label: "💰 Termurah", icon: "💰" },
+                    { value: "rating", label: "⭐ Rating tinggi", icon: "⭐" },
                   ].map((sort) => (
                     <motion.button
                       key={sort.value}
                       onClick={() => setSortBy(sort.value)}
                       whileHover={{ x: 4 }}
                       whileTap={{ scale: 0.97 }}
-                      className={`px-4 py-3 rounded-xl text-sm font-bold transition-all text-left ${
+                      className={`px-4 py-3 rounded-xl text-sm font-bold transition-all text-left flex items-center gap-2 ${
                         sortBy === sort.value
                           ? "bg-gradient-to-r from-forest-main to-forest-light text-white shadow-lg"
                           : "bg-white/50 text-gray-700 hover:bg-forest-pale/20 border-2 border-transparent hover:border-forest-pale/40"
                       }`}
                     >
+                      <span className="text-lg">{sort.icon}</span>
                       {sort.label}
                     </motion.button>
                   ))}
@@ -923,7 +981,7 @@ export default function SmartKostFinder() {
                           <div className="text-xs space-y-2 p-2 min-w-[220px]">
                             <div className="relative h-28 rounded-xl overflow-hidden">
                               <img
-                                src={`https://picsum.photos/seed/${kost.id}/400/300`}
+                                src={kost.photos[0]}
                                 alt={kost.name}
                                 className="w-full h-full object-cover"
                               />
@@ -960,12 +1018,134 @@ export default function SmartKostFinder() {
                   </MapContainer>
                   <button
                     onClick={() => setShowFullscreenMap(true)}
-                    className="absolute bottom-4 right-4 z-[500] px-5 py-3 bg-white/95 backdrop-blur-md rounded-2xl text-forest-dark font-black shadow-xl hover:scale-105 transition-all flex items-center gap-2 text-sm group-hover:scale-110"
+                    className="absolute bottom-4 right-4 z-[500] w-12 h-12 bg-white/95 backdrop-blur-md rounded-xl shadow-xl hover:scale-110 transition-all flex items-center justify-center group-hover:scale-105"
                   >
-                    <span className="text-lg">🗺️</span>
-                    Perbesar Peta
+                    <svg
+                      className="w-6 h-6 text-forest-dark"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                      />
+                    </svg>
                   </button>
                 </div>
+
+                {sidebarKost && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="absolute left-4 top-4 bottom-4 w-80 bg-white/98 backdrop-blur-lg rounded-2xl shadow-2xl p-5 overflow-y-auto border-2 border-gold/30 z-[400]"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-lg font-black text-forest-dark pr-2 line-clamp-2">
+                        {sidebarKost.name}
+                      </h3>
+                      <button
+                        onClick={() => setSidebarKost(null)}
+                        className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm transition-all flex-shrink-0"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <div className="relative h-40 rounded-2xl overflow-hidden mb-4">
+                      <img
+                        src={sidebarKost.photos[0]}
+                        alt={sidebarKost.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <span className="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-gold text-forest-dark font-bold text-xs">
+                        ⭐ {sidebarKost.rating}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-xs text-gray-600 flex items-start gap-2">
+                        <svg
+                          className="w-4 h-4 text-gold flex-shrink-0 mt-0.5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span className="font-medium">
+                          {sidebarKost.address}, {sidebarKost.city}
+                        </span>
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1.5 rounded-full bg-forest-pale/50 text-forest-dark text-xs font-bold">
+                          {sidebarKost.category}
+                        </span>
+                        <span className="px-3 py-1.5 rounded-full bg-gold/20 text-gold text-xs font-bold">
+                          📍{" "}
+                          {sidebarKost.distanceMeters < 1000
+                            ? `${sidebarKost.distanceMeters}m`
+                            : `${(sidebarKost.distanceMeters / 1000).toFixed(
+                                1
+                              )}km`}
+                        </span>
+                      </div>
+                      <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
+                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                          💰 Harga per bulan
+                        </p>
+                        <p className="text-2xl font-black text-forest-dark">
+                          Rp {(sidebarKost.pricePerMonth / 1000000).toFixed(1)}{" "}
+                          jt
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          ✨ Fasilitas
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {sidebarKost.facilities.slice(0, 6).map((f) => (
+                            <span
+                              key={f}
+                              className="px-2.5 py-1 rounded-lg bg-forest-pale/30 text-[10px] font-bold text-forest-dark border border-forest-pale/40"
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                          🏷️ Tags
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {sidebarKost.environmentTags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-1 rounded-full bg-gold/10 text-[10px] font-bold text-gold border border-gold/30"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedKost(sidebarKost);
+                          setSidebarKost(null);
+                        }}
+                        className="w-full btn-primary py-3 text-sm font-black rounded-xl mt-4"
+                      >
+                        Lihat Detail Lengkap →
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </motion.div>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-2">
@@ -981,7 +1161,9 @@ export default function SmartKostFinder() {
 
               <AnimatePresence mode="popLayout">
                 <motion.div
-                  key={`${selectedCampus}-${category}-${maxPrice}-${sortBy}`}
+                  key={`${selectedCampus}-${category}-${maxPrice}-${sortBy}-${searchQuery}-${selectedTags.join(
+                    ","
+                  )}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -1000,7 +1182,7 @@ export default function SmartKostFinder() {
                     >
                       <div className="h-48 relative overflow-hidden">
                         <img
-                          src={`https://picsum.photos/seed/${kost.id}/500/400`}
+                          src={kost.photos[0]}
                           alt={kost.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
@@ -1082,7 +1264,7 @@ export default function SmartKostFinder() {
                     Belum ada kost yang cocok
                   </p>
                   <p className="text-sm text-gray-500 mt-2 font-medium">
-                    Coba longgarkan filter
+                    Coba longgarkan filter atau ubah pencarian
                   </p>
                 </motion.div>
               )}
@@ -1098,7 +1280,7 @@ export default function SmartKostFinder() {
           className="fixed inset-0 z-40 bg-gradient-to-br from-forest-main/95 via-forest-light/95 to-gold/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
         >
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30" />
-          <div className="relative max-w-3xl w-full">
+          <div className="relative max-w-2xl w-full">
             <button
               onClick={() => setSurveyMode(false)}
               className="absolute -top-2 right-0 sm:-top-4 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 hover:scale-110 transition-all font-bold text-xl shadow-lg"
@@ -1108,7 +1290,7 @@ export default function SmartKostFinder() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-10 md:p-14 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <div className="mb-6 sm:mb-8">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
@@ -1156,12 +1338,14 @@ export default function SmartKostFinder() {
                     {currentQuestion.question}
                   </h2>
                   {currentQuestion.type === "select" && (
-                    <SearchableSelect
-                      options={campuses}
-                      value={surveyAnswers[currentQuestion.id] || ""}
-                      onChange={handleSurveyAnswer}
-                      placeholder="Pilih kampus..."
-                    />
+                    <div className="max-w-md">
+                      <SearchableSelect
+                        options={campuses}
+                        value={surveyAnswers[currentQuestion.id] || ""}
+                        onChange={handleSurveyAnswer}
+                        placeholder="Pilih kampus..."
+                      />
+                    </div>
                   )}
                   {currentQuestion.type === "choice" && (
                     <div className="space-y-3">
