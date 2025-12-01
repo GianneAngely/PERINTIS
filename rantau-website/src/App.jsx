@@ -10,6 +10,7 @@ import Forum from "./pages/Forum";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SplashScreen from "./components/SplashScreen"; // ← ADD THIS
+import KostOwnerRegister from "./pages/KostOwnerRegister";
 
 function App() {
   const [showSplash, setShowSplash] = useState(true); // ← ADD THIS
@@ -29,6 +30,7 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/kost-owner-register" element={<KostOwnerRegister />} />
 
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
