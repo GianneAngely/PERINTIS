@@ -5,6 +5,7 @@ import { kosts } from "../data/kosts";
 import SearchableSelect from "../components/SearchableSelect";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useNavigate } from "react-router-dom";
 
 const customIcon = new L.DivIcon({
   className: "custom-marker",
@@ -238,15 +239,15 @@ function SpotlightAnimation({ topKosts, onComplete, onSelectKost }) {
 
               <div className="p-6 space-y-4">
                 <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
-                  <p className="text-xs text-gray-600 font-bold mb-1">
+                  <p className="text-xs text-white font-bold mb-1">
                     💰 Harga per bulan
                   </p>
-                  <p className="text-3xl font-black text-forest-dark">
+                  <p className="text-3xl font-bold text-white">
                     Rp {(kost.pricePerMonth / 1000000).toFixed(1)} jt
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <span className="font-bold">
                     📏{" "}
                     {kost.distanceMeters < 1000
@@ -348,7 +349,7 @@ function ChatModal({ kost, onClose }) {
         text.toLowerCase().includes("harga")
       ) {
         responseText = `Harga kost Rp ${kost.pricePerMonth.toLocaleString(
-          "id-ID"
+          "id-ID",
         )}/bulan. Bisa bayar bulanan atau 3 bulanan dengan diskon 5%! 💰`;
       } else if (
         text.toLowerCase().includes("lihat") ||
@@ -659,16 +660,16 @@ function FullscreenMapModal({
                           {selectedKost.distanceMeters < 1000
                             ? `${selectedKost.distanceMeters}m`
                             : `${(selectedKost.distanceMeters / 1000).toFixed(
-                                1
+                                1,
                               )}km`}
                         </span>
                       </div>
 
                       <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
-                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                        <p className="text-xs text-white mb-1 font-bold">
                           💰 Harga per bulan
                         </p>
-                        <p className="text-3xl font-black text-forest-dark">
+                        <p className="text-3xl font-bold text-white">
                           Rp {(selectedKost.pricePerMonth / 1000000).toFixed(1)}{" "}
                           jt
                         </p>
@@ -775,16 +776,16 @@ function FullscreenMapModal({
                           {selectedKost.distanceMeters < 1000
                             ? `${selectedKost.distanceMeters}m`
                             : `${(selectedKost.distanceMeters / 1000).toFixed(
-                                1
+                                1,
                               )}km`}
                         </span>
                       </div>
 
                       <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
-                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                        <p className="text-xs text--600 mb-1 font-bold">
                           💰 Harga per bulan
                         </p>
-                        <p className="text-2xl font-black text-forest-dark">
+                        <p className="text-2xl font-bold text-white">
                           Rp {(selectedKost.pricePerMonth / 1000000).toFixed(1)}{" "}
                           jt
                         </p>
@@ -893,10 +894,10 @@ function KostDetailModal({ kost, onClose, onOpenChat }) {
         <div className="p-8 overflow-y-auto max-h-[calc(90vh-20rem)] space-y-6">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-gold/10 to-gold/5 rounded-2xl p-6 border-l-4 border-gold">
-              <p className="text-xs text-gray-600 mb-2 font-bold uppercase tracking-wider">
+              <p className="text-xs text-white mb-2 font-bold uppercase tracking-wider">
                 💰 Harga per bulan
               </p>
-              <p className="text-4xl font-black text-forest-dark">
+              <p className="text-4xl font-bold text-white">
                 Rp {kost.pricePerMonth.toLocaleString("id-ID")}
               </p>
             </div>
@@ -1020,6 +1021,7 @@ function KostDetailModal({ kost, onClose, onOpenChat }) {
   );
 }
 export default function SmartKostFinder() {
+  const navigate = useNavigate();
   const [surveyMode, setSurveyMode] = useState(false);
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState({});
@@ -1162,7 +1164,7 @@ export default function SmartKostFinder() {
       "Semua kampus",
       ...Array.from(new Set(kosts.map((k) => k.campusNearby))),
     ],
-    []
+    [],
   );
 
   const allTags = useMemo(() => {
@@ -1181,7 +1183,7 @@ export default function SmartKostFinder() {
           k.name.toLowerCase().includes(query) ||
           k.city.toLowerCase().includes(query) ||
           k.address.toLowerCase().includes(query) ||
-          k.campusNearby.toLowerCase().includes(query)
+          k.campusNearby.toLowerCase().includes(query),
       );
     }
 
@@ -1193,7 +1195,7 @@ export default function SmartKostFinder() {
 
     if (selectedTags.length > 0) {
       list = list.filter((k) =>
-        selectedTags.every((tag) => k.environmentTags.includes(tag))
+        selectedTags.every((tag) => k.environmentTags.includes(tag)),
       );
     }
 
@@ -1242,7 +1244,7 @@ export default function SmartKostFinder() {
 
   const toggleTag = (tag) => {
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -1535,7 +1537,7 @@ export default function SmartKostFinder() {
                               {kost.distanceMeters < 1000
                                 ? `${kost.distanceMeters}m`
                                 : `${(kost.distanceMeters / 1000).toFixed(
-                                    1
+                                    1,
                                   )}km`}
                             </p>
                             <button
@@ -1624,15 +1626,15 @@ export default function SmartKostFinder() {
                           {sidebarKost.distanceMeters < 1000
                             ? `${sidebarKost.distanceMeters}m`
                             : `${(sidebarKost.distanceMeters / 1000).toFixed(
-                                1
+                                1,
                               )}km`}
                         </span>
                       </div>
                       <div className="bg-gradient-to-r from-gold/10 to-transparent rounded-xl p-4 border-l-4 border-gold">
-                        <p className="text-xs text-gray-600 mb-1 font-bold">
+                        <p className="text-xs text-white mb-1 font-bold">
                           💰 Harga per bulan
                         </p>
-                        <p className="text-2xl font-black text-forest-dark">
+                        <p className="text-2xl font-bold text-white">
                           Rp {(sidebarKost.pricePerMonth / 1000000).toFixed(1)}{" "}
                           jt
                         </p>
@@ -1695,7 +1697,7 @@ export default function SmartKostFinder() {
               <AnimatePresence mode="popLayout">
                 <motion.div
                   key={`${selectedCampus}-${category}-${maxPrice}-${sortBy}-${searchQuery}-${selectedTags.join(
-                    ","
+                    ",",
                   )}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1865,7 +1867,7 @@ export default function SmartKostFinder() {
                       </p>
                       <p className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">
                         {Math.round(
-                          ((surveyStep + 1) / surveyQuestions.length) * 100
+                          ((surveyStep + 1) / surveyQuestions.length) * 100,
                         )}
                         % selesai
                       </p>
@@ -1916,13 +1918,11 @@ export default function SmartKostFinder() {
                       {currentQuestion.options.map((opt, idx) => (
                         <motion.button
                           key={opt.value}
-                          initial={{ opacity: 0, y: 10 }}
+                          initial={{ opacity: 1, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.08 }}
                           onClick={() => handleSurveyAnswer(opt.value)}
-                          whileHover={{ scale: 1.02, x: 8 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 rounded-2xl text-sm sm:text-base font-bold transition-all bg-white border-3 border-gray-200 text-gray-700 hover:border-gold hover:shadow-xl hover:bg-gradient-to-r hover:from-gold/5 hover:to-transparent"
+                          className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 rounded-2xl text-sm sm:text-base font-bold transition-all bg-white border-3 border-gray-200 text-gray-700 hover:border-gold hover:shadow-lg hover:bg-gold-5"
                         >
                           {opt.label}
                         </motion.button>
@@ -1943,7 +1943,7 @@ export default function SmartKostFinder() {
                           return (
                             <motion.button
                               key={opt.value}
-                              initial={{ opacity: 0, scale: 0.9 }}
+                              initial={{ opacity: 1, scale: 0.9 }}
                               animate={{ opacity: 1, scale: 1 }}
                               transition={{ delay: idx * 0.06 }}
                               onClick={() => handleMultipleSelect(opt.value)}
@@ -1966,7 +1966,7 @@ export default function SmartKostFinder() {
                       <motion.button
                         onClick={() =>
                           handleSurveyAnswer(
-                            surveyAnswers[currentQuestion.id] || []
+                            surveyAnswers[currentQuestion.id] || [],
                           )
                         }
                         whileHover={{ scale: 1.02 }}
@@ -2002,13 +2002,22 @@ export default function SmartKostFinder() {
         {showSpotlight && topMatches.length > 0 && (
           <SpotlightAnimation
             topKosts={topMatches}
-            onComplete={() => setShowSpotlight(false)}
+            onComplete={() => {
+              setShowSpotlight(false);
+              setSurveyMode(false);
+              setShowLoading(false);
+              // jangan reset surveyStep / surveyAnswers di sini
+            }}
             onSelectKost={(kost) => {
               setShowSpotlight(false);
+              setSurveyMode(false);
+              setShowLoading(false);
               setSelectedKost(kost);
+              // surveyAnswers & topMatches tetap tersimpan
             }}
           />
         )}
+
         {selectedKost && (
           <KostDetailModal
             kost={selectedKost}
