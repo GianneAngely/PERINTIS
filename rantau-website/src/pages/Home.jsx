@@ -499,7 +499,7 @@ export default function Home() {
                 </div>
 
                 <Link
-                  to="/kost-owner"
+                  to="/kost-owner-register"
                   className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all inline-block"
                 >
                   Register Your Business
