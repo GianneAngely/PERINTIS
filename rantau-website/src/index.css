@@ -46,11 +46,17 @@
   }
 
   .card {
-    @apply bg-white rounded-card p-6 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 cursor-pointer;
+    @apply bg-white rounded-xl p-6 shadow-lg hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 cursor-pointer;
   }
 }
 
 @layer utilities {
+  /* Custom shadow for card hover effect */
+  .shadow-card-hover {
+    box-shadow: 0 20px 50px rgba(45, 95, 63, 0.3);
+  }
+
+  /* Animation delays */
   .animation-delay-2000 {
     animation-delay: 2s;
   }
@@ -60,6 +66,7 @@
   }
 }
 
+/* 3D Carousel Styles */
 .perspective-container {
   perspective: 1400px;
   perspective-origin: 50% 50%;
@@ -110,6 +117,7 @@
   position: relative;
 }
 
+/* Responsive 3D Carousel */
 @media (min-width: 640px) {
   .perspective-container {
     perspective: 1800px;
