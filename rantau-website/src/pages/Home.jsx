@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import {
 import { kosts } from "../data/kosts";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({
@@ -77,17 +78,21 @@ export default function Home() {
     const facilities = quizAnswers.facilities.includes(value)
       ? quizAnswers.facilities.filter((f) => f !== value)
       : [...quizAnswers.facilities, value];
+
     setQuizAnswers({ ...quizAnswers, facilities });
   };
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 pb-32 bg-gradient-to-br from-gray-50 via-white to-forest-pale/10">
+        {/* Background Decorations */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-96 h-96 bg-forest-main/10 rounded-full blur-3xl animate-blob"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
         </div>
 
+        {/* Hero Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mb-16">
           <span className="bg-gradient-to-r from-forest-light via-forest-pale to-gold bg-clip-text text-transparent text-4xl sm:text-6xl lg:text-7xl font-bold">
             RANTAU
@@ -96,12 +101,10 @@ export default function Home() {
           <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight max-w-4xl mx-auto">
             Ruang Temu Anak Perantau
           </h1>
-
           <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
             Kami menangani pencarian, pencocokan, komunitas, pengelolaan
             tagihan, dan komunitas.
           </p>
-
           <Link
             to="/register"
             className="inline-block bg-gradient-to-r from-forest-main to-forest-light hover:from-forest-dark hover:to-forest-main text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl shadow-forest-main/50 transition-all duration-300"
@@ -110,6 +113,7 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* 3D Carousel */}
         <div className="relative z-10 w-full flex items-center justify-center perspective-container mt-12">
           <div className="cylinder-carousel">
             {featuredKosts.map((kost, index) => (
@@ -117,7 +121,7 @@ export default function Home() {
                 key={kost.id}
                 className="cylinder-card"
                 style={{
-                  "--rotation": index * 30,
+                  "--rotation": `${index * 30}`,
                   transform: `rotateY(${index * 30}deg) translateZ(280px)`,
                 }}
               >
@@ -145,6 +149,7 @@ export default function Home() {
                       <MapPin className="w-2 h-2" />
                       <span className="truncate">{kost.city}</span>
                     </div>
+
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <div className="flex items-center gap-0.5">
                         <Star className="w-2 h-2 text-yellow-400 fill-yellow-400" />
@@ -153,9 +158,10 @@ export default function Home() {
                         </span>
                       </div>
                       <div className="text-white/60 text-[9px]">
-                        • {kost.availableRooms} rooms
+                        {kost.availableRooms} rooms
                       </div>
                     </div>
+
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-white/60 text-[8px]">
@@ -166,12 +172,12 @@ export default function Home() {
                           <span className="text-[9px] font-normal">/bln</span>
                         </div>
                       </div>
-                      <Link
-                        to="/kost-finder"
-                        className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-2 py-0.5 rounded text-[9px] font-semibold transition-all hover:scale-105"
+                      <button
+                        onClick={() => navigate("/smart-kost-finder")}
+                        className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-2 py-0.5 rounded text-[9px] font-semibold transition-all hover:scale-105 cursor-pointer"
                       >
                         View
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -181,6 +187,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Features Section */}
       <section className="py-20 px-4 relative bg-white">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
@@ -194,6 +201,7 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Feature 1: Kost Finder */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h3 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -231,6 +239,7 @@ export default function Home() {
                       className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-forest-main focus:ring-2 focus:ring-forest-main/20"
                     />
                   </div>
+
                   <div className="grid grid-cols-2 gap-3 mb-4">
                     <button
                       onClick={() => setShowQuiz(true)}
@@ -239,20 +248,21 @@ export default function Home() {
                       <Sparkles className="w-4 h-4" />
                       Quick Quiz
                     </button>
-                    <Link
-                      to="/kost-finder"
+                    <button
+                      onClick={() => navigate("/smart-kost-finder")}
                       className="bg-forest-main/10 hover:bg-forest-main/20 border border-forest-main/30 text-forest-main px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
                     >
                       <Map className="w-4 h-4" />
                       View Map
-                    </Link>
+                    </button>
                   </div>
+
                   <div className="space-y-3">
                     {kosts.slice(0, 3).map((kost, i) => (
-                      <Link
+                      <button
                         key={i}
-                        to="/kost-finder"
-                        className="bg-white border border-gray-200 rounded-xl p-3 hover:border-forest-main hover:shadow-md transition-all cursor-pointer block"
+                        onClick={() => navigate("/smart-kost-finder")}
+                        className="w-full bg-white border border-gray-200 rounded-xl p-3 hover:border-forest-main hover:shadow-md transition-all cursor-pointer"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
@@ -261,7 +271,7 @@ export default function Home() {
                               alt={kost.name}
                               className="w-12 h-12 rounded-lg object-cover"
                             />
-                            <div>
+                            <div className="text-left">
                               <h4 className="text-gray-900 font-semibold text-sm mb-1">
                                 {kost.name}
                               </h4>
@@ -277,7 +287,7 @@ export default function Home() {
                             Rp {(kost.pricePerMonth / 1000000).toFixed(1)}jt
                           </div>
                         </div>
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -285,6 +295,7 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Feature 2: Bill Splitting */}
           <div className="bg-gradient-to-br from-forest-dark to-forest-main rounded-3xl p-8 lg:p-12 mb-20 shadow-2xl">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -336,7 +347,7 @@ export default function Home() {
                 </div>
 
                 <Link
-                  to="/split-reminder"
+                  to="/tagihan-kost"
                   className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all inline-block"
                 >
                   Try Split Calculator
@@ -425,7 +436,7 @@ export default function Home() {
                       </span>
                     </div>
                     <button className="w-full bg-forest-main hover:bg-forest-dark text-white py-3 rounded-xl font-bold transition-all">
-                      💳 Pay Now
+                      Pay Now
                     </button>
                   </div>
                 </div>
@@ -450,14 +461,16 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Feature 3: UMKM & Kost Owners */}
           <div className="bg-gradient-to-br from-gray-50 to-forest-pale/10 border-2 border-gray-200 rounded-3xl p-6 sm:p-8 lg:p-12 mb-20 shadow-xl">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div>
                 <div className="inline-block bg-gold/20 text-gold px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                  Support Local
+                  🎯 Support Local
                 </div>
                 <h3 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                  Empowering <span className="text-gold">UMKM Kost</span> Owners
+                  Empowering <span className="text-gold">UMKM & Kost</span>{" "}
+                  Owners
                 </h3>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed">
                   Platform khusus untuk pemilik kost dan UMKM lokal. Kelola
@@ -467,7 +480,7 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 lg:gap-6 mb-8">
                   {[
-                    { value: "2,500+", label: "High Rent Kos" },
+                    { value: "2,500+", label: "Registered Kos" },
                     { value: "850+", label: "UMKM Partners" },
                     { value: "15K+", label: "Active Users" },
                   ].map((stat, i) => (
@@ -496,7 +509,7 @@ export default function Home() {
               <div className="space-y-4">
                 {[
                   {
-                    icon: "🏢",
+                    icon: "🏠",
                     title: "Property Management",
                     desc: "Dashboard lengkap untuk kelola semua kost dengan mudah dan efisien",
                   },
@@ -530,6 +543,7 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Feature 4: Roommate Matching */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
             <div className="order-2 lg:order-1 relative">
               <div className="absolute inset-0 bg-gradient-to-r from-forest-light/20 to-forest-pale/20 blur-3xl rounded-3xl"></div>
@@ -591,7 +605,7 @@ export default function Home() {
                 {[
                   "AI-powered compatibility matching",
                   "Verified student profiles only",
-                  "Safe in-app messaging system",
+                  "Safe & in-app messaging system",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-gray-700">
                     <div className="w-6 h-6 rounded-full bg-forest-main/20 flex items-center justify-center flex-shrink-0">
@@ -604,6 +618,7 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Feature 5: Forum */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h3 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -669,7 +684,7 @@ export default function Home() {
                               {post.user}
                             </span>
                             <span className="text-gray-400 text-xs">
-                              • {post.time}
+                              {post.time}
                             </span>
                           </div>
                           <h4 className="text-gray-900 font-medium mb-2">
@@ -677,10 +692,11 @@ export default function Home() {
                           </h4>
                           <div className="flex items-center gap-4 text-xs text-gray-500">
                             <span className="flex items-center gap-1">
-                              <ThumbsUp className="w-3 h-3" /> {post.likes}
+                              <ThumbsUp className="w-3 h-3" />
+                              {post.likes}
                             </span>
                             <span className="flex items-center gap-1">
-                              <MessageCircle className="w-3 h-3" />{" "}
+                              <MessageCircle className="w-3 h-3" />
                               {post.replies}
                             </span>
                           </div>
@@ -695,10 +711,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="py-20 px-4 relative bg-white">
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="bg-gradient-to-r from-forest-main to-forest-light rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
+
             <div className="relative z-10">
               <h2 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">
                 Ready to start your perantau journey?
@@ -720,6 +738,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Quiz Modal */}
       {showQuiz && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gradient-to-br from-forest-dark to-forest-main rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-forest-light/20 relative">
@@ -799,6 +818,7 @@ export default function Home() {
         </div>
       )}
 
+      {/* Spacer for mobile navigation */}
       <div className="h-16 sm:h-0"></div>
     </div>
   );
