@@ -1,33 +1,20 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
-  Search,
-  Users,
-  Store,
-  Receipt,
-  MessageSquare,
   ArrowRight,
   Star,
   MapPin,
-  Video,
   CheckCircle,
-  TrendingUp,
-  Shield,
   Clock,
   DollarSign,
-  UserCheck,
-  Briefcase,
-  MessageCircle,
-  ThumbsUp,
-  Eye,
-  Smartphone,
-  Globe,
-  BarChart3,
-  Heart,
+  Users,
   Sparkles,
   Map,
   X,
+  ThumbsUp,
+  MessageCircle,
 } from "lucide-react";
+import { kosts } from "../data/kosts";
 
 export default function Home() {
   const [showQuiz, setShowQuiz] = useState(false);
@@ -38,80 +25,7 @@ export default function Home() {
     facilities: [],
   });
 
-  const carouselItems = [
-    {
-      id: 1,
-      title: "Kost Modern Jakarta",
-      color: "from-forest-dark to-forest-main",
-      location: "Jakarta Selatan",
-    },
-    {
-      id: 2,
-      title: "Kost Minimalis Bali",
-      color: "from-forest-main to-forest-light",
-      location: "Denpasar",
-    },
-    {
-      id: 3,
-      title: "Kost Eksklusif Jogja",
-      color: "from-forest-light to-forest-pale",
-      location: "Yogyakarta",
-    },
-    {
-      id: 4,
-      title: "Kost Premium Bandung",
-      color: "from-gold to-gold-light",
-      location: "Bandung",
-    },
-    {
-      id: 5,
-      title: "Kost Strategis Surabaya",
-      color: "from-forest-pale to-gold",
-      location: "Surabaya",
-    },
-    {
-      id: 6,
-      title: "Kost Nyaman Semarang",
-      color: "from-forest-main to-gold",
-      location: "Semarang",
-    },
-    {
-      id: 7,
-      title: "Kost Lengkap Medan",
-      color: "from-forest-dark to-forest-light",
-      location: "Medan",
-    },
-    {
-      id: 8,
-      title: "Kost Aman Malang",
-      color: "from-gold-light to-forest-pale",
-      location: "Malang",
-    },
-    {
-      id: 9,
-      title: "Kost Elite Makassar",
-      color: "from-forest-light to-gold",
-      location: "Makassar",
-    },
-    {
-      id: 10,
-      title: "Kost Cozy Palembang",
-      color: "from-forest-main to-forest-pale",
-      location: "Palembang",
-    },
-    {
-      id: 11,
-      title: "Kost Smart Bogor",
-      color: "from-forest-dark to-gold",
-      location: "Bogor",
-    },
-    {
-      id: 12,
-      title: "Kost Luxury Bintaro",
-      color: "from-gold to-forest-main",
-      location: "Bintaro",
-    },
-  ];
+  const featuredKosts = kosts.slice(0, 12);
 
   const quizQuestions = [
     {
@@ -175,14 +89,12 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mb-16">
-          {/* <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight max-w-4xl mx-auto"> */}
-          {/*   Your perantauan journey{" "} */}
           <span className="bg-gradient-to-r from-forest-light via-forest-pale to-gold bg-clip-text text-transparent text-4xl sm:text-6xl lg:text-7xl font-bold">
             RANTAU
           </span>
           <br />
           <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight max-w-4xl mx-auto">
-            Ruang Temu Anak Perantau{" "}
+            Ruang Temu Anak Perantau
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -200,19 +112,23 @@ export default function Home() {
 
         <div className="relative z-10 w-full flex items-center justify-center perspective-container mt-12">
           <div className="cylinder-carousel">
-            {carouselItems.map((item, index) => (
+            {featuredKosts.map((kost, index) => (
               <div
-                key={item.id}
+                key={kost.id}
                 className="cylinder-card"
                 style={{
                   "--rotation": index * 30,
                   transform: `rotateY(${index * 30}deg) translateZ(280px)`,
                 }}
               >
-                <div
-                  className={`cylinder-card-inner bg-gradient-to-br ${item.color} w-full h-full rounded-xl shadow-2xl flex flex-col justify-between p-2.5 sm:p-3 relative overflow-hidden`}
-                >
-                  <div className="absolute inset-0 bg-black/20"></div>
+                <div className="cylinder-card-inner w-full h-full rounded-xl shadow-2xl flex flex-col justify-between p-2.5 sm:p-3 relative overflow-hidden">
+                  <img
+                    src={kost.photos[0]}
+                    alt={kost.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
+
                   <div className="relative z-10">
                     <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded px-1.5 py-0.5 inline-block mb-1.5">
                       <span className="text-white text-[8px] font-semibold">
@@ -220,22 +136,25 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
+
                   <div className="relative z-10">
                     <h3 className="text-white font-bold text-xs mb-1 line-clamp-1">
-                      {item.title}
+                      {kost.name}
                     </h3>
                     <div className="flex items-center gap-1 text-white/80 text-[9px] mb-1.5">
                       <MapPin className="w-2 h-2" />
-                      <span className="truncate">{item.location}</span>
+                      <span className="truncate">{kost.city}</span>
                     </div>
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <div className="flex items-center gap-0.5">
                         <Star className="w-2 h-2 text-yellow-400 fill-yellow-400" />
                         <span className="text-white font-semibold text-[10px]">
-                          4.8
+                          {kost.rating}
                         </span>
                       </div>
-                      <div className="text-white/60 text-[9px]">• 120</div>
+                      <div className="text-white/60 text-[9px]">
+                        • {kost.availableRooms} rooms
+                      </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
@@ -243,13 +162,16 @@ export default function Home() {
                           Mulai dari
                         </div>
                         <div className="text-white font-bold text-[11px]">
-                          Rp 1.5jt
+                          Rp {(kost.pricePerMonth / 1000000).toFixed(1)}jt
                           <span className="text-[9px] font-normal">/bln</span>
                         </div>
                       </div>
-                      <button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-2 py-0.5 rounded text-[9px] font-semibold transition-all">
+                      <Link
+                        to="/kost-finder"
+                        className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-2 py-0.5 rounded text-[9px] font-semibold transition-all hover:scale-105"
+                      >
                         View
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -258,6 +180,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="py-20 px-4 relative bg-white">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
@@ -267,20 +190,19 @@ export default function Home() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Dirancang untuk menjadi platform paling intuitif dan kaya fitur
               bagi para siswa. Setiap fitur yang Anda butuhkan dilengkapi dengan
-              kecerdasan buatan (AI) untuk memudahkan perjalanan belajar
-              Anda.{" "}
+              kecerdasan buatan (AI) untuk memudahkan perjalanan belajar Anda.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h3 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                Temukan kost sempurna anda dengan cepat{" "}
+                Temukan kost sempurna anda dengan cepat
               </h3>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Pencarian bertenaga AI dengan filter canggih. Ikuti kuis singkat
                 kami untuk rekomendasi yang disesuaikan atau jelajahi peta untuk
-                menemukan kos dekat kampus Anda.{" "}
+                menemukan kos dekat kampus Anda.
               </p>
               <ul className="space-y-3">
                 {[
@@ -317,50 +239,45 @@ export default function Home() {
                       <Sparkles className="w-4 h-4" />
                       Quick Quiz
                     </button>
-                    <button className="bg-forest-main/10 hover:bg-forest-main/20 border border-forest-main/30 text-forest-main px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
+                    <Link
+                      to="/kost-finder"
+                      className="bg-forest-main/10 hover:bg-forest-main/20 border border-forest-main/30 text-forest-main px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                    >
                       <Map className="w-4 h-4" />
                       View Map
-                    </button>
+                    </Link>
                   </div>
                   <div className="space-y-3">
-                    {[
-                      {
-                        name: "Kost Modern Jakarta",
-                        price: "Rp 1.5jt",
-                        rating: "4.8",
-                      },
-                      {
-                        name: "Kost Minimalis Bali",
-                        price: "Rp 1.2jt",
-                        rating: "4.9",
-                      },
-                      {
-                        name: "Kost Premium Bandung",
-                        price: "Rp 1.8jt",
-                        rating: "4.7",
-                      },
-                    ].map((kost, i) => (
-                      <div
+                    {kosts.slice(0, 3).map((kost, i) => (
+                      <Link
                         key={i}
-                        className="bg-white border border-gray-200 rounded-xl p-3 hover:border-forest-main hover:shadow-md transition-all cursor-pointer"
+                        to="/kost-finder"
+                        className="bg-white border border-gray-200 rounded-xl p-3 hover:border-forest-main hover:shadow-md transition-all cursor-pointer block"
                       >
                         <div className="flex items-center justify-between">
-                          <div>
-                            <h4 className="text-gray-900 font-semibold text-sm mb-1">
-                              {kost.name}
-                            </h4>
-                            <div className="flex items-center gap-2">
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                              <span className="text-gray-600 text-xs">
-                                {kost.rating}
-                              </span>
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={kost.photos[0]}
+                              alt={kost.name}
+                              className="w-12 h-12 rounded-lg object-cover"
+                            />
+                            <div>
+                              <h4 className="text-gray-900 font-semibold text-sm mb-1">
+                                {kost.name}
+                              </h4>
+                              <div className="flex items-center gap-2">
+                                <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                                <span className="text-gray-600 text-xs">
+                                  {kost.rating}
+                                </span>
+                              </div>
                             </div>
                           </div>
                           <div className="text-gold font-bold text-sm">
-                            {kost.price}
+                            Rp {(kost.pricePerMonth / 1000000).toFixed(1)}jt
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -418,9 +335,12 @@ export default function Home() {
                   ))}
                 </div>
 
-                <button className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all">
+                <Link
+                  to="/split-reminder"
+                  className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all inline-block"
+                >
                   Try Split Calculator
-                </button>
+                </Link>
               </div>
 
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -512,7 +432,7 @@ export default function Home() {
 
                 <div className="bg-forest-dark/10 px-6 py-4 grid grid-cols-3 gap-4 text-center">
                   {[
-                    { value: "Rp 2.5M+", label: "Total Bills Managed" },
+                    { value: "2.5M+", label: "Total Bills Managed" },
                     { value: "98%", label: "On-time Payment Rate" },
                     { value: "3,500+", label: "Active Users" },
                   ].map((stat, i) => (
@@ -530,11 +450,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-50 to-forest-pale/10 border-2 border-gray-200 rounded-3xl p-8 lg:p-12 mb-20 shadow-xl">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="bg-gradient-to-br from-gray-50 to-forest-pale/10 border-2 border-gray-200 rounded-3xl p-6 sm:p-8 lg:p-12 mb-20 shadow-xl">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div>
+                <div className="inline-block bg-gold/20 text-gold px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                  Support Local
+                </div>
                 <h3 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                  <span className="text-gold">UMKM Kost</span> Owners
+                  Empowering <span className="text-gold">UMKM Kost</span> Owners
                 </h3>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed">
                   Platform khusus untuk pemilik kost dan UMKM lokal. Kelola
@@ -542,26 +465,32 @@ export default function Home() {
                   perantau.
                 </p>
 
-                <div className="grid grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 lg:gap-6 mb-8">
                   {[
                     { value: "2,500+", label: "High Rent Kos" },
                     { value: "850+", label: "UMKM Partners" },
                     { value: "15K+", label: "Active Users" },
                   ].map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <div className="text-3xl font-bold text-gold mb-1">
+                    <div
+                      key={i}
+                      className="text-center bg-white rounded-2xl p-5 sm:p-4 shadow-md border border-gray-200"
+                    >
+                      <div className="text-3xl sm:text-2xl lg:text-3xl font-bold text-gold mb-2">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-gray-600 leading-tight">
+                      <div className="text-sm sm:text-xs lg:text-sm text-gray-600 leading-tight">
                         {stat.label}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <button className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all">
+                <Link
+                  to="/kost-owner"
+                  className="bg-gold hover:bg-gold-light text-forest-dark px-6 py-3 rounded-xl font-bold transition-all inline-block"
+                >
                   Register Your Business
-                </button>
+                </Link>
               </div>
 
               <div className="space-y-4">
@@ -656,7 +585,7 @@ export default function Home() {
                 Biarkan AI menemukan teman sekamar yang cocok untuk Anda.
                 Tambahkan preferensi, kebiasaan gaya hidup, dan ciri kepribadian
                 Anda. Sistem kami akan mencocokkan Anda dengan teman sekamar
-                yang sempurna.{" "}
+                yang sempurna.
               </p>
               <ul className="space-y-3">
                 {[
@@ -683,7 +612,7 @@ export default function Home() {
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Bergabunglah dengan ribuan mahasiswa. Bagikan pengalaman,
                 dapatkan tips, temukan beasiswa, dan temukan peluang pekerjaan
-                paruh waktu, semua dalam satu komunitas.{" "}
+                paruh waktu, semua dalam satu komunitas.
               </p>
               <ul className="space-y-3">
                 {[

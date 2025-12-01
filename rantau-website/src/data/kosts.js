@@ -21,6 +21,11 @@ export const kosts = [
     environmentTags: ["Dekat Kampus", "Dekat Warung Makan", "Aman", "Tenang"],
     description:
       "Kost eksklusif putri dengan suasana nyaman dan aman. Lokasi strategis dekat kampus dan pusat kota.",
+    photos: [
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
+    ],
     owner: "Ibu Sari Dewi",
     rules: [
       "Jam malam 23.00",
@@ -31,6 +36,40 @@ export const kosts = [
   },
   {
     id: 2,
+    name: "Kost Ganesha Putra",
+    category: "Putra",
+    city: "Bandung",
+    address: "Jl. Ganesha No.10, Bandung",
+    campusNearby: "Institut Teknologi Bandung",
+    pricePerMonth: 1200000,
+    distanceMeters: 250,
+    rating: 4.7,
+    coords: { lat: -6.8915, lng: 107.6107 },
+    facilities: [
+      "WiFi",
+      "Kamar Mandi Dalam",
+      "Laundry",
+      "Parkir Motor",
+      "Pantry",
+    ],
+    environmentTags: ["Dekat ITB", "Ramai", "Strategis"],
+    description:
+      "Kost putra eksklusif di jantung kampus ITB. Walking distance ke seluruh fakultas.",
+    photos: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
+    ],
+    owner: "Bapak Andi Hermawan",
+    rules: [
+      "Bebas keluar masuk",
+      "Dilarang bawa pulang teman menginap tanpa izin",
+      "Jaga kebersihan",
+    ],
+    availableRooms: 10,
+  },
+  {
+    id: 3,
     name: "Kost Damai Sentosa",
     category: "Campuran",
     city: "Jimbaran",
@@ -44,6 +83,11 @@ export const kosts = [
     environmentTags: ["Dekat Kampus", "Akses Transportasi", "Security Ketat"],
     description:
       "Kost modern dengan fasilitas lengkap di area kampus Unud Jimbaran.",
+    photos: [
+      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80",
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
+    ],
     owner: "Bapak Wayan Suarta",
     rules: [
       "Tamu maksimal hingga jam 22.00",
@@ -53,7 +97,7 @@ export const kosts = [
     availableRooms: 5,
   },
   {
-    id: 3,
+    id: 4,
     name: "Kost Pelangi Asih",
     category: "Putri",
     city: "Denpasar",
@@ -67,6 +111,11 @@ export const kosts = [
     environmentTags: ["Dekat Minimarket", "Dekat Warung", "Ramah Lingkungan"],
     description:
       "Kost putri dengan suasana kekeluargaan. Pemilik tinggal di lokasi.",
+    photos: [
+      "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
+    ],
     owner: "Ibu Made Ayu",
     rules: [
       "Jam malam 22.30",
@@ -76,7 +125,7 @@ export const kosts = [
     availableRooms: 2,
   },
   {
-    id: 4,
+    id: 5,
     name: "Kost Sakura Putri",
     category: "Putri",
     city: "Denpasar Timur",
@@ -90,6 +139,11 @@ export const kosts = [
     environmentTags: ["Dekat Kampus Seni", "Tenang", "Kreatif"],
     description:
       "Kost khusus putri di kawasan ISI Denpasar. Suasana tenang dan artistik.",
+    photos: [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      "https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=80",
+      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80",
+    ],
     owner: "Ibu Komang Rai",
     rules: [
       "Jam malam 23.00",
@@ -99,7 +153,7 @@ export const kosts = [
     availableRooms: 4,
   },
   {
-    id: 5,
+    id: 6,
     name: "Kost UNY Putri Lestari",
     category: "Putri",
     city: "Sleman",
@@ -113,6 +167,11 @@ export const kosts = [
     environmentTags: ["Dekat UNY", "Dekat Warung", "Ramai Mahasiswa"],
     description:
       "Kost putri strategis dekat kampus UNY dengan akses mudah ke pusat kota Jogja.",
+    photos: [
+      "https://images.unsplash.com/photo-1598928636135-d146006ff4be?w=800&q=80",
+      "https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&q=80",
+    ],
     owner: "Ibu Sri Mulyani",
     rules: [
       "Jam malam 22.00",
@@ -122,7 +181,7 @@ export const kosts = [
     availableRooms: 6,
   },
   {
-    id: 6,
+    id: 7,
     name: "Kost Dewi Sri Premium",
     category: "Putri",
     city: "Denpasar Selatan",
@@ -143,6 +202,11 @@ export const kosts = [
     environmentTags: ["Premium", "Dekat Mall", "Modern"],
     description:
       "Kost premium dengan fasilitas hotel. Full furnished dengan smart lock.",
+    photos: [
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
+    ],
     owner: "CV Kost Sejahtera",
     rules: [
       "Check-in/out digital",
@@ -150,35 +214,6 @@ export const kosts = [
       "Dilarang merokok di dalam kamar",
     ],
     availableRooms: 8,
-  },
-  {
-    id: 7,
-    name: "Kost Ganesha Putra",
-    category: "Putra",
-    city: "Bandung",
-    address: "Jl. Ganesha No.10, Bandung",
-    campusNearby: "Institut Teknologi Bandung",
-    pricePerMonth: 1200000,
-    distanceMeters: 250,
-    rating: 4.7,
-    coords: { lat: -6.8915, lng: 107.6107 },
-    facilities: [
-      "WiFi",
-      "Kamar Mandi Dalam",
-      "Laundry",
-      "Parkir Motor",
-      "Pantry",
-    ],
-    environmentTags: ["Dekat ITB", "Ramai", "Strategis"],
-    description:
-      "Kost putra eksklusif di jantung kampus ITB. Walking distance ke seluruh fakultas.",
-    owner: "Bapak Andi Hermawan",
-    rules: [
-      "Bebas keluar masuk",
-      "Dilarang bawa pulang teman menginap tanpa izin",
-      "Jaga kebersihan",
-    ],
-    availableRooms: 10,
   },
   {
     id: 8,
@@ -195,6 +230,11 @@ export const kosts = [
     environmentTags: ["Strategis", "Dekat Stasiun", "Mall Terdekat"],
     description:
       "Kost modern 5 lantai di Margonda. Akses mudah ke UI, stasiun, dan mall.",
+    photos: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
+    ],
     owner: "PT Kost Nusantara",
     rules: [
       "Check-in digital",
@@ -217,6 +257,11 @@ export const kosts = [
     facilities: ["WiFi", "Dapur", "Parkir", "Kamar Mandi Luar"],
     environmentTags: ["Terjangkau", "Dekat Pasar", "Ramai"],
     description: "Kost putri dengan harga terjangkau di Sawojajar Malang.",
+    photos: [
+      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80",
+      "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+    ],
     owner: "Ibu Ratna Sari",
     rules: [
       "Jam malam 22.00",
@@ -240,6 +285,11 @@ export const kosts = [
     environmentTags: ["Dekat Undip", "Sejuk", "Tenang"],
     description:
       "Kost putra nyaman di kawasan Undip Tembalang. Suasana sejuk dan tenang.",
+    photos: [
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80",
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
+      "https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=80",
+    ],
     owner: "Bapak Gunawan",
     rules: [
       "Bebas keluar masuk",
@@ -262,6 +312,11 @@ export const kosts = [
     facilities: ["WiFi", "Laundry", "Dapur", "Parkir", "Musholla"],
     environmentTags: ["Dekat ITS", "Akses Mudah", "Fasilitas Lengkap"],
     description: "Kost campuran dengan lokasi strategis dekat ITS dan Unair.",
+    photos: [
+      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&q=80",
+      "https://images.unsplash.com/photo-1598928636135-d146006ff4be?w=800&q=80",
+    ],
     owner: "Bapak Hendra",
     rules: [
       "Tamu maksimal jam 22.00",
@@ -284,6 +339,11 @@ export const kosts = [
     facilities: ["WiFi", "Kamar Mandi Dalam", "Dapur", "Jemuran"],
     environmentTags: ["Dekat Unhas", "Tenang", "Aman"],
     description: "Kost putri eksklusif di kawasan Unhas Tamalanrea.",
+    photos: [
+      "https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+    ],
     owner: "Ibu Nurhayati",
     rules: ["Jam malam 22.30", "Dilarang tamu menginap", "Jaga kebersihan"],
     availableRooms: 4,
@@ -302,6 +362,11 @@ export const kosts = [
     facilities: ["WiFi", "AC", "Kamar Mandi Dalam", "Laundry", "Parkir"],
     environmentTags: ["Dekat Unpad", "Strategis", "Modern"],
     description: "Kost putra modern di jantung kawasan Unpad.",
+    photos: [
+      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
+    ],
     owner: "Bapak Rizki",
     rules: [
       "Bebas keluar masuk",
@@ -331,6 +396,11 @@ export const kosts = [
     ],
     environmentTags: ["Dekat UGM", "Premium", "Nyaman"],
     description: "Kost putri premium walking distance dari UGM.",
+    photos: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
+    ],
     owner: "Ibu Endang Rahayu",
     rules: ["Jam malam 23.00", "Ruang belajar buka 24 jam", "Dilarang berisik"],
     availableRooms: 5,
@@ -349,6 +419,11 @@ export const kosts = [
     facilities: ["WiFi", "Kamar Mandi Dalam", "Dapur", "Laundry", "CCTV"],
     environmentTags: ["Dekat Unair", "Aman", "Ramai Mahasiswa"],
     description: "Kost campuran di kawasan kampus C Unair.",
+    photos: [
+      "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
+      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80",
+    ],
     owner: "Ibu Lina",
     rules: ["Tamu maksimal jam 22.00", "Jaga kebersihan", "Parkir tertib"],
     availableRooms: 9,
@@ -367,6 +442,11 @@ export const kosts = [
     facilities: ["WiFi", "Dapur", "Parkir", "Kamar Mandi Luar"],
     environmentTags: ["Terjangkau", "Dekat Kampus", "Sejuk"],
     description: "Kost putri dengan harga terjangkau di kawasan Unand.",
+    photos: [
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      "https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=80",
+    ],
     owner: "Ibu Siti Rahma",
     rules: ["Jam malam 22.00", "Tamu wajib lapor", "Jaga kebersihan bersama"],
     availableRooms: 6,
@@ -385,6 +465,11 @@ export const kosts = [
     facilities: ["WiFi", "Musholla", "Parkir", "Dapur"],
     environmentTags: ["Islami", "Dekat Unsyiah", "Tenang"],
     description: "Kost putra dengan nuansa Islami di kawasan Unsyiah.",
+    photos: [
+      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&q=80",
+      "https://images.unsplash.com/photo-1598928636135-d146006ff4be?w=800&q=80",
+    ],
     owner: "Bapak Abdullah",
     rules: [
       "Wajib sholat berjamaah",
@@ -407,6 +492,11 @@ export const kosts = [
     facilities: ["WiFi", "AC", "Kamar Mandi Dalam", "Laundry", "Security"],
     environmentTags: ["Strategis", "Dekat Pusat Kota", "Akses Mudah"],
     description: "Kost campuran di jantung kota Denpasar dengan akses mudah.",
+    photos: [
+      "https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+    ],
     owner: "CV Kost Bali Sejahtera",
     rules: ["Check-in digital", "Tamu maksimal jam 23.00", "Jaga kebersihan"],
     availableRooms: 12,
@@ -425,6 +515,11 @@ export const kosts = [
     facilities: ["WiFi", "Dapur", "Kamar Mandi Luar", "Parkir"],
     environmentTags: ["Ekonomis", "Dekat Unsri", "Tenang"],
     description: "Kost putri ekonomis dekat kampus Unsri Indralaya.",
+    photos: [
+      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
+    ],
     owner: "Ibu Yanti",
     rules: ["Jam malam 22.00", "Tamu lapor", "Jaga kebersihan"],
     availableRooms: 5,
@@ -443,6 +538,11 @@ export const kosts = [
     facilities: ["WiFi", "AC", "Kamar Mandi Dalam", "Parkir", "View Laut"],
     environmentTags: ["View Bagus", "Dekat Unpatti", "Sejuk"],
     description: "Kost putra dengan view laut di kawasan Unpatti Ambon.",
+    photos: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
+    ],
     owner: "Bapak Yohanis",
     rules: [
       "Bebas keluar masuk",

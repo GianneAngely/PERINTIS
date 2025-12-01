@@ -189,32 +189,168 @@ export default function KostOwner() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-[#2d5a45] rounded-3xl p-6 sm:p-8 border border-green-700/30">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl sm:text-2xl font-bold text-white">
-                  Revenue Overview
-                </h2>
-                <button className="flex items-center gap-2 bg-[#1a3a2e] text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-[#152d24] transition-all">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                    Revenue Overview
+                  </h2>
+                  <p className="text-green-300 text-sm">
+                    Pendapatan meningkat 12% bulan ini
+                  </p>
+                </div>
+                <button className="flex items-center justify-center gap-2 bg-[#1a3a2e] text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-[#152d24] transition-all">
                   Last 7 days
                   <ChevronDown className="w-4 h-4" />
                 </button>
               </div>
-              <div className="h-64 sm:h-80 flex items-end justify-between gap-2 sm:gap-4 px-2">
-                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                  (day, i) => (
-                    <div
-                      key={day}
-                      className="flex-1 flex flex-col items-center"
-                    >
-                      <div
-                        className="w-full bg-gradient-to-t from-green-400 to-green-300 rounded-t-lg hover:from-green-500 hover:to-green-400 transition-all cursor-pointer"
-                        style={{
-                          height: `${[60, 80, 70, 90, 75, 85, 95][i]}%`,
-                        }}
-                      ></div>
-                      <span className="text-green-300 text-xs mt-2">{day}</span>
+
+              <div className="bg-[#1a3a2e] rounded-2xl p-4 sm:p-6 mb-6">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <div className="text-green-300 text-xs mb-1">Hari Ini</div>
+                    <div className="text-white font-bold text-lg sm:text-xl">
+                      Rp 8.5M
                     </div>
-                  ),
-                )}
+                  </div>
+                  <div>
+                    <div className="text-green-300 text-xs mb-1">
+                      Minggu Ini
+                    </div>
+                    <div className="text-white font-bold text-lg sm:text-xl">
+                      Rp 52M
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-green-300 text-xs mb-1">Bulan Ini</div>
+                    <div className="text-yellow-400 font-bold text-lg sm:text-xl">
+                      Rp 48.5M
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-green-300 text-xs mb-1">Growth</div>
+                    <div className="text-green-400 font-bold text-lg sm:text-xl flex items-center justify-center gap-1">
+                      <TrendingUp className="w-4 h-4" />
+                      +12%
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#1a3a2e] rounded-2xl p-6">
+                <div className="flex gap-4">
+                  <div className="flex flex-col justify-between text-green-300 text-xs py-2">
+                    <span>9M</span>
+                    <span>7.5M</span>
+                    <span>6M</span>
+                    <span>4.5M</span>
+                    <span>3M</span>
+                    <span>1.5M</span>
+                    <span>0</span>
+                  </div>
+
+                  <div className="flex-1 relative">
+                    <svg
+                      className="w-full"
+                      viewBox="0 0 700 300"
+                      preserveAspectRatio="none"
+                    >
+                      <defs>
+                        <linearGradient
+                          id="areaGradient"
+                          x1="0%"
+                          y1="0%"
+                          x2="0%"
+                          y2="100%"
+                        >
+                          <stop
+                            offset="0%"
+                            stopColor="#4ade80"
+                            stopOpacity="0.3"
+                          />
+                          <stop
+                            offset="100%"
+                            stopColor="#4ade80"
+                            stopOpacity="0"
+                          />
+                        </linearGradient>
+                      </defs>
+
+                      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+                        <line
+                          key={i}
+                          x1="0"
+                          y1={i * 50}
+                          x2="700"
+                          y2={i * 50}
+                          stroke="#2d5a45"
+                          strokeWidth="1"
+                          strokeDasharray="5,5"
+                        />
+                      ))}
+
+                      <path
+                        d="M 0,250 L 100,200 L 200,180 L 300,150 L 400,170 L 500,120 L 600,100 L 700,50 L 700,300 L 0,300 Z"
+                        fill="url(#areaGradient)"
+                      />
+
+                      <polyline
+                        points="0,250 100,200 200,180 300,150 400,170 500,120 600,100 700,50"
+                        fill="none"
+                        stroke="#4ade80"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+
+                      {[
+                        { x: 0, y: 250, value: "1.5M" },
+                        { x: 100, y: 200, value: "3M" },
+                        { x: 200, y: 180, value: "3.5M" },
+                        { x: 300, y: 150, value: "4.5M" },
+                        { x: 400, y: 170, value: "4M" },
+                        { x: 500, y: 120, value: "5.5M" },
+                        { x: 600, y: 100, value: "6.5M" },
+                        { x: 700, y: 50, value: "8.5M" },
+                      ].map((point, i) => (
+                        <g key={i}>
+                          ircle cx={point.x}
+                          cy={point.y}
+                          r="6" fill="#1a3a2e" stroke="#4ade80" strokeWidth="3"
+                          />
+                        </g>
+                      ))}
+                    </svg>
+
+                    <div className="flex justify-between text-green-300 text-xs mt-2 px-1">
+                      <span>Mon</span>
+                      <span>Tue</span>
+                      <span>Wed</span>
+                      <span>Thu</span>
+                      <span>Fri</span>
+                      <span>Sat</span>
+                      <span>Sun</span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 mt-6">
+                <div className="bg-[#1a3a2e] rounded-xl p-3 sm:p-4 text-center">
+                  <div className="text-2xl sm:text-3xl mb-1">📈</div>
+                  <div className="text-green-300 text-xs mb-1">Peak Day</div>
+                  <div className="text-white font-bold text-sm">Sunday</div>
+                </div>
+                <div className="bg-[#1a3a2e] rounded-xl p-3 sm:p-4 text-center">
+                  <div className="text-2xl sm:text-3xl mb-1">💰</div>
+                  <div className="text-green-300 text-xs mb-1">Avg/Day</div>
+                  <div className="text-white font-bold text-sm">Rp 5.2M</div>
+                </div>
+                <div className="bg-[#1a3a2e] rounded-xl p-3 sm:p-4 text-center">
+                  <div className="text-2xl sm:text-3xl mb-1">🎯</div>
+                  <div className="text-green-300 text-xs mb-1">Target</div>
+                  <div className="text-white font-bold text-sm">95%</div>
+                </div>
               </div>
             </div>
 
