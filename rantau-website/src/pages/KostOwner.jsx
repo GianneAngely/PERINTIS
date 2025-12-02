@@ -316,7 +316,7 @@ export default function KostOwner() {
                           ircle cx={point.x}
                           cy={point.y}
                           r="6" fill="#1a3a2e" stroke="#4ade80" strokeWidth="3"
-                          />
+                          /
                         </g>
                       ))}
                     </svg>
