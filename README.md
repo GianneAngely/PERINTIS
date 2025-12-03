@@ -1,3 +1,4 @@
+````markdown
 # RANTAU - Ruang Temu Anak Perantau 🌏
 
 ![RANTAU Logo](public/logo%20rantau%20baru-nobg.png)
@@ -88,3 +89,96 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal And
 ## 📂 Susunan Project
 
 Berikut adalah struktur folder utama dari proyek ini:
+
+
+rantau-website/
+├── public/                 \# Aset statis (Logo, favicon)
+├── src/
+│   ├── assets/             \# Aset gambar/svg komponen
+│   ├── components/         \# Komponen UI yang dapat digunakan kembali
+│   │   ├── Header.jsx      \# Navigasi atas
+│   │   ├── MobileBottomNav.jsx \# Navigasi bawah (mobile)
+│   │   ├── KostCard.jsx    \# Kartu listing kost
+│   │   ├── RoommateCard.jsx \# Kartu profil roommate
+│   │   └── ...
+│   ├── data/               \# Data dummy (Mock data)
+│   │   ├── kosts.js        \# Data dummy kost
+│   │   ├── roommates.js    \# Data dummy profil roommate
+│   │   └── forumPost.js    \# Data dummy forum
+│   ├── pages/              \# Halaman utama aplikasi
+│   │   ├── Home.jsx        \# Landing page
+│   │   ├── SmartKostFinder.jsx \# Pencarian kost & Peta
+│   │   ├── Roommate.jsx    \# Halaman pencarian teman
+│   │   ├── TagihanKost.jsx \# Halaman manajemen tagihan
+│   │   ├── Forum.jsx       \# Halaman forum
+│   │   └── ...
+│   ├── App.jsx             \# Komponen utama & Routing
+│   ├── main.jsx            \# Entry point React
+│   └── index.css           \# Global styles & Tailwind directives
+├── eslint.config.js        \# Konfigurasi Linter
+├── tailwind.config.js      \# Konfigurasi Tailwind CSS
+├── vite.config.js          \# Konfigurasi Vite
+└── package.json            \# Daftar dependensi & skrip
+
+
+
+## 💡 Contoh Penggunaan
+
+1.  **Mencari Kost:**
+    * Buka menu **"Cari Kost"**.
+    * Gunakan filter di sebelah kiri atau klik tombol "Mulai Survey Personal" untuk rekomendasi otomatis.
+    * Klik pin pada peta untuk melihat detail singkat kost.
+
+2.  **Mencari Roommate:**
+    * Buka menu **"Roommate"**.
+    * Klik "Mulai Cari Roommate" dan isi kuesioner singkat tentang kebiasaan tidur, kebersihan, dan sosial.
+    * Sistem akan menampilkan daftar orang dengan persentase kecocokan tertinggi (misal: "93% Match").
+
+3.  **Mengelola Tagihan:**
+    * Masuk ke menu **"Tagihan"**.
+    * Anda dapat melihat tagihan bulan ini (Listrik, WiFi, Air).
+    * Tandai tagihan yang sudah dibayar atau kirim pengingat ke teman sekamar.
+
+
+## 🤝 Kontribusi
+
+Kontribusi sangat diterima! Jika Anda ingin meningkatkan fitur RANTAU:
+
+1.  **Fork** repository ini.
+2.  Buat **Branch** fitur baru (`git checkout -b fitur-keren`).
+3.  **Commit** perubahan Anda (`git commit -m 'Menambahkan fitur keren'`).
+4.  **Push** ke Branch (`git push origin fitur-keren`).
+5.  Buat **Pull Request**.
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah **MIT License**.
+
+```text
+MIT License
+
+Copyright (c) 2025 RANTAU Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+````
+
+```
+```
