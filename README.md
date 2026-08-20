@@ -1,30 +1,32 @@
-# PERINTIS — RANTAU (Team Dev Repo)
+# PERINTIS
 
-The team development repository for **RANTAU — Ruang Temu Anak Perantau**, our project for the PRISMA Competition 2025. RANTAU is a web platform for students living away from home in Bali: find a boarding house (*kost*), match with a compatible roommate, split shared bills, and connect through a community forum. The app lives in [`rantau-website/`](./rantau-website).
+**PERINTIS** is a concept for a personal-finance app: snap a receipt and it's read, categorized, and logged **automatically** — so your money stays tracked without the tedious manual entry. As a bonus, it can recommend a *kost* (boarding house) that fits your financial situation.
 
-![The RANTAU app](screenshot.png)
+> A personal project — idea, design & prototype by **Gianne Angely**.
 
-## Features
+### ▶ Live prototype — https://perintis-id.vercel.app
 
-- **Smart Kost Finder** — interactive quiz or explore mode, with an interactive map
-- **Roommate Matching** — compatibility-based matching by lifestyle and habits
-- **Bill Splitter & Reminders** — manage shared costs with housemates
-- **Community Forum** — share stories and tips with fellow perantau
-- **Personal profile & dashboard**
+![PERINTIS](screenshot.png)
 
-## Tech stack
+## The idea
 
-React · Vite · TypeScript · Tailwind CSS · Framer Motion · React Leaflet · Lucide
+- **Scan struk (OCR)** — photograph a receipt; it's read and categorized on its own, no manual typing.
+- **Buku kas & budget** — spending mapped in real time, with an early warning before you overspend.
+- **Split bill** — split shared bills (kost utilities and the like) fairly.
+- **Cari kost — _bonus_** — recommends boarding houses that match your financial condition.
 
-## Run locally
+## What's in this repo
 
-```bash
-git clone https://github.com/GianneAngely/PERINTIS.git
-cd PERINTIS/rantau-website
-npm install
-npm run dev
-```
+- **`landing/`** — the site, one link, two pages:
+  - `index.html` — the landing page (the pitch).
+  - `app.html` — the interactive prototype you can actually click through.
 
-## Note
+Open `landing/index.html` locally, or just visit the live link above.
 
-This is the collaborative development repo (built as team *Perintis*). The polished competition build also lives at [`Prisma-Competition-2025-Rantau`](https://github.com/GianneAngely/Prisma-Competition-2025-Rantau).
+## Tech
+
+A self-contained **web prototype** today (vanilla HTML/CSS/JS, mock data). Envisioned build: **React Native + Expo** (mobile), **Next.js + PostgreSQL** (API), and **Python** with **OpenCV + Tesseract OCR + NLP** for the receipt reading.
+
+---
+
+Concept, design & prototype by **Gianne Angely** · 2026

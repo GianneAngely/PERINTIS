@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PERINTIS — Kelola Keuangan Pribadi</title>
+<meta name="description" content="PERINTIS — konsep & prototipe aplikasi keuangan pribadi: foto struk langsung tercatat & terkategori otomatis, plus rekomendasi kost yang cocok dengan kondisi keuanganmu. Ide, desain, dan prototipe oleh Gianne Angely." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* PERINTIS — personal-finance concept by Gianne Angely. Receipt language:
+   indigo ink + coral stamp on warm paper. Landing pitch + link to the app. */
+:root{
+  --paper:#f4f1e8; --paper-hi:#fffdf7; --paper-2:#ece6d8;
+  --ink:#191348; --ink-2:#2c2570; --ink-soft:#4c4878; --ink-faint:#8a86a6;
+  --coral:#fb7185; --coral-deep:#e11d48;
+  --rule:rgba(25,19,72,.28); --rule-soft:rgba(25,19,72,.13);
+  --maxw:1120px; --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:clamp(1rem,.97rem + .16vw,1.08rem);line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:repeating-linear-gradient(0deg,rgba(25,19,72,.022) 0 1px,transparent 1px 4px)}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque";font-weight:800;line-height:1.02;letter-spacing:0;margin:0}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"Spline Sans Mono",monospace}
+::selection{background:var(--coral);color:#fff}
+:focus-visible{outline:2.5px solid var(--coral-deep);outline-offset:3px}
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,40px)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1.5px dashed var(--rule)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.35rem;letter-spacing:.02em;display:flex;align-items:center;gap:.55em}
+.brand .tick{width:26px;height:26px;background:var(--ink);color:var(--coral);display:grid;place-items:center;border-radius:6px;font-family:"Spline Sans Mono";font-weight:600;font-size:.9rem}
+.nav-links{display:flex;gap:1.8rem;font-family:"Spline Sans Mono";font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.nav-links a{color:var(--ink-soft);padding-bottom:2px;border-bottom:2px solid transparent;transition:.2s}
+.nav-links a:hover{color:var(--ink);border-color:var(--coral)}
+.nav .cta{font-family:"Spline Sans Mono";font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper-hi);padding:.6em 1.1em;border-radius:7px}
+@media (max-width:860px){.nav-links{display:none}}
+
+/* hero */
+.hero{padding:clamp(2.4rem,5vw,4rem) 0 clamp(2.4rem,5vw,3.5rem)}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.kicker{font-family:"Spline Sans Mono";font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:.8ch;padding-bottom:1rem;border-bottom:1.5px solid var(--ink);margin-bottom:1.8rem}
+.kicker b{color:var(--ink);font-weight:600}
+.kicker .sq{width:8px;height:8px;background:var(--coral);display:inline-block}
+h1.lead{font-size:clamp(2.5rem,1.9rem + 3.2vw,4.6rem);font-weight:800}
+h1.lead .c{color:var(--coral-deep);white-space:nowrap}
+.sub{margin-top:1.4rem;font-size:clamp(1.02rem,1rem + .3vw,1.2rem);color:var(--ink-soft);max-width:40ch;line-height:1.55}
+.actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:2rem}
+.btn{display:inline-flex;align-items:center;gap:.5em;font-family:"Spline Sans Mono";font-weight:600;font-size:.92rem;text-transform:uppercase;letter-spacing:.05em;padding:.95em 1.5em;border-radius:9px;border:0;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s}
+.btn-coral{background:var(--coral);color:#4a0d1c;box-shadow:0 3px 0 var(--coral-deep)}
+.btn-coral:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--coral-deep)}
+.btn-coral:active{transform:translateY(1px);box-shadow:0 1px 0 var(--coral-deep)}
+.link{font-family:"Spline Sans Mono";font-size:.86rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);border-bottom:2px solid var(--coral);padding-bottom:2px}
+.link:hover{color:var(--coral-deep)}
+.ledger{margin-top:2.4rem;max-width:30rem;font-family:"Spline Sans Mono";font-size:.82rem}
+.lrow{display:flex;align-items:baseline;gap:.6ch;padding:.5rem 0;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.lrow .dots{flex:1;border-bottom:1.5px dotted var(--rule);transform:translateY(-.25em)}
+.lrow .v{color:var(--ink);font-weight:600;font-size:.95rem;letter-spacing:0}
+.lrow .v b{color:var(--coral-deep)}
+
+/* receipt artifact */
+.receipt-wrap{position:relative;justify-self:center}
+.receipt{--s:11px;position:relative;background:var(--paper-hi);color:var(--ink);padding:2rem 1.6rem 2.2rem;max-width:390px;margin-inline:auto;overflow:hidden;
+  box-shadow:0 26px 50px -26px rgba(25,19,72,.5);background-image:repeating-linear-gradient(0deg,rgba(25,19,72,.028) 0 1px,transparent 1px 5px);
+  -webkit-mask:radial-gradient(var(--s) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--s)) 100% repeat-x,radial-gradient(var(--s) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--s)) 100% repeat-x;-webkit-mask-composite:source-in;
+          mask:radial-gradient(var(--s) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--s)) 100% repeat-x,radial-gradient(var(--s) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--s)) 100% repeat-x;mask-composite:intersect}
+.r-store{text-align:center;font-family:"Spline Sans Mono";margin-bottom:.2rem}
+.r-store b{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.15rem;letter-spacing:.14em;display:block}
+.r-store span{font-size:.7rem;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase}
+.r-meta{display:flex;justify-content:space-between;font-family:"Spline Sans Mono";font-size:.72rem;color:var(--ink-faint);margin:.9rem 0 .2rem}
+.hr{border:0;border-top:1.5px dashed var(--rule);margin:.5rem 0}
+.ri{display:flex;justify-content:space-between;font-family:"Spline Sans Mono";font-size:.82rem;padding:.16rem 0;color:var(--ink-soft)}
+.ri .a{color:var(--ink);font-variant-numeric:tabular-nums}
+.ri.tot{color:var(--ink);font-weight:600}
+.scanline{display:flex;align-items:center;gap:.7ch;justify-content:center;font-family:"Spline Sans Mono";font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-deep);margin:.7rem 0;padding:.4rem 0;border-top:1.5px dashed var(--coral);border-bottom:1.5px dashed var(--coral)}
+.ri.cat .a{color:var(--coral-deep);font-weight:600}
+.ri.cat span:first-child::before{content:"» ";color:var(--coral)}
+.r-total{margin-top:.6rem;padding-top:.7rem;border-top:2.5px double var(--ink)}
+.r-total .big{display:flex;justify-content:space-between;align-items:baseline;font-family:"Bricolage Grotesque";font-weight:800}
+.r-total .big span:first-child{font-family:"Spline Sans Mono";font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.r-total .big .amt{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.r-total .note{font-family:"Spline Sans Mono";font-size:.68rem;color:var(--ink-faint);margin-top:.3rem;text-align:right}
+.stamp{position:absolute;top:40%;right:-14px;font-family:"Spline Sans Mono";font-weight:600;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-deep);border:2.5px solid var(--coral-deep);border-radius:8px;padding:.3em .7em;transform:rotate(-13deg);opacity:.88;background:color-mix(in srgb,var(--paper-hi) 55%,transparent);box-shadow:inset 0 0 0 1px rgba(225,29,72,.25)}
+.receipt-cap{text-align:center;font-family:"Spline Sans Mono";font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:1rem}
+.scanbeam{position:absolute;left:0;right:0;height:36%;top:-40%;background:linear-gradient(180deg,rgba(251,113,133,.30),transparent);border-bottom:2px solid var(--coral);opacity:0;pointer-events:none;z-index:4}
+
+/* tear */
+.tear{position:relative;height:24px;background:var(--paper);-webkit-mask:conic-gradient(from -45deg at bottom,#0000 25%,#000 0) 50%/22px 100%;mask:conic-gradient(from -45deg at bottom,#0000 25%,#000 0) 50%/22px 100%}
+.tear-label{max-width:var(--maxw);margin:.4rem auto 0;padding-inline:clamp(20px,5vw,40px);font-family:"Spline Sans Mono";font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);text-align:center}
+
+/* sections */
+.divider{display:flex;align-items:center;justify-content:center;gap:1ch;font-family:"Spline Sans Mono";font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:2rem}
+.divider::before,.divider::after{content:"";border-top:1.5px dashed var(--rule);flex:1}
+.divider b{color:var(--coral-deep);font-weight:600}
+.sec{padding:clamp(3rem,6vw,5rem) 0}
+.sec h2{font-size:clamp(1.9rem,1.45rem + 1.9vw,2.95rem);max-width:22ch}
+.sec .intro{margin-top:1.15rem;color:var(--ink-soft);max-width:54ch;font-size:1.08rem;line-height:1.55}
+.sec.carbon{background:var(--ink);color:var(--paper);background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 5px)}
+.sec.carbon h2{color:#fff}.sec.carbon .intro{color:#c8c4e6}
+.sec.carbon .divider{color:#8f8ab8}
+.sec.carbon .divider::before,.sec.carbon .divider::after{border-color:rgba(255,255,255,.22)}
+.tally{margin-top:2.2rem;max-width:60ch}
+.tally-row{display:flex;gap:1.4rem;align-items:flex-start;border-top:1.5px dashed var(--rule);padding:1.4rem 0}
+.tally-row .mk{font-family:"Spline Sans Mono";font-weight:600;font-size:.95rem;color:var(--coral-deep);flex:none;width:2.6ch;padding-top:.15rem}
+.tally-row p{color:var(--ink-soft);margin:0}
+.tally-row p b{color:var(--ink);font-weight:600}
+.flow{margin-top:2.4rem;max-width:46rem}
+.frow{display:flex;align-items:baseline;gap:1rem;padding:1.05rem 0;border-top:1.5px dashed rgba(255,255,255,.18)}
+.frow .n{font-family:"Spline Sans Mono";color:var(--coral);font-weight:600;font-size:.85rem;flex:none;width:2.6ch}
+.frow .ft{font-family:"Bricolage Grotesque";font-weight:700;font-size:1.18rem;color:#fff;flex:none}
+.frow .dots{flex:1;border-bottom:1.5px dotted rgba(255,255,255,.22);transform:translateY(-.3em);min-width:1.5rem}
+.frow .fd{font-family:"Spline Sans Mono";color:#b8b3dd;font-size:.8rem;text-align:right;flex:none}
+.loopback{margin-top:1.7rem;display:inline-flex;align-items:center;gap:.7ch;font-family:"Spline Sans Mono";font-size:.8rem;color:var(--coral);letter-spacing:.06em;text-transform:uppercase;border:1.5px dashed var(--coral);padding:.62em 1em;border-radius:8px}
+@media(max-width:620px){.frow{flex-wrap:wrap;gap:.35rem 1rem}.frow .dots{display:none}.frow .fd{text-align:left;width:100%;padding-left:3.6ch}}
+.feat-lead{margin-top:2.4rem;display:flex;gap:1.5rem;align-items:flex-start;background:var(--paper-hi);border:1.5px solid var(--rule-soft);padding:1.7rem;border-radius:6px;box-shadow:0 18px 38px -24px rgba(25,19,72,.45)}
+.feat-lead .fi{width:48px;height:48px;flex:none;border:1.5px solid var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--coral-deep)}
+.feat-lead .fi svg{width:24px;height:24px}
+.feat-lead h3{font-size:1.3rem}
+.feat-lead p{margin-top:.45rem;color:var(--ink-soft);font-size:.98rem}
+.feat-lead .tags{margin-top:.75rem;font-family:"Spline Sans Mono";font-size:.74rem;letter-spacing:.04em;color:var(--coral-deep);text-transform:uppercase}
+.flist{margin-top:1.2rem;max-width:56rem}
+.f2{display:flex;align-items:center;gap:1rem;padding:1.15rem 0;border-top:1.5px dashed var(--rule)}
+.f2 .ic{flex:none;width:32px;height:32px;border-radius:8px;background:var(--ink);color:var(--coral);display:grid;place-items:center}
+.f2 .ic svg{width:17px;height:17px}
+.f2 .nm{font-family:"Bricolage Grotesque";font-weight:700;font-size:1.06rem;flex:none}
+.f2 .dots{flex:1;border-bottom:1.5px dotted var(--rule);transform:translateY(-.1em);min-width:1.5rem}
+.f2 .fd{font-family:"Spline Sans Mono";color:var(--ink-soft);font-size:.8rem;text-align:right;flex:none}
+@media(max-width:620px){.f2{flex-wrap:wrap;gap:.3rem .8rem}.f2 .dots{display:none}.f2 .fd{width:100%;padding-left:calc(32px + 1rem)}}
+.cta-sec{text-align:center}
+.cta-sec h2{max-width:22ch;margin:0 auto}
+.cta-sec .intro{margin-inline:auto}
+.cta-sec .actions{justify-content:center;margin-top:2rem}
+footer{background:var(--paper);border-top:1.5px dashed var(--rule);padding:3rem 0 3.4rem;text-align:center}
+.thanks{font-family:"Spline Sans Mono";letter-spacing:.32em;text-transform:uppercase;color:var(--ink);font-size:.92rem;font-weight:600}
+.barcode{height:48px;max-width:270px;margin:1.5rem auto 1.3rem;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,#0000 2px 4px,var(--ink) 4px 5px,#0000 5px 9px,var(--ink) 9px 12px,#0000 12px 15px);opacity:.85}
+.foot-meta{font-family:"Spline Sans Mono";font-size:.74rem;color:var(--ink-faint);letter-spacing:.09em;line-height:2;text-transform:uppercase}
+.foot-meta b{color:var(--ink-soft)}
+
+/* alignment rhythm */
+.sec.alignR>.wrap{text-align:right}
+.sec.alignR h2,.sec.alignR .intro{margin-left:auto}
+.sec.alignR .tally{text-align:left;margin-left:auto}
+.sec.alignC>.wrap{text-align:center}
+.sec.alignC h2,.sec.alignC .intro{margin-inline:auto}
+.sec.alignC .flow{margin-inline:auto;text-align:left}
+
+/* ---- motion (progressive: only when JS + motion-ok) ---- */
+.js .reveal{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+.js .stagger>*{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.js .stagger.in>*{opacity:1;transform:none}
+/* hero receipt focal */
+.js .hero .cat-block{opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease) 1s,transform .6s var(--ease) 1s}
+.js .hero.play .cat-block{opacity:1;transform:none}
+.js .hero .stamp{opacity:0;transform:rotate(-13deg) scale(1.5)}
+.js .hero.play .stamp{opacity:.88;transform:rotate(-13deg) scale(1);transition:opacity .35s ease 1.35s,transform .5s var(--ease) 1.35s}
+.js .hero.play .scanbeam{animation:beam 1.4s var(--ease) .25s}
+@keyframes beam{0%{top:-40%;opacity:1}100%{top:108%;opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal,.js .stagger>*,.js .hero .cat-block,.js .hero .stamp{opacity:1!important;transform:none!important;transition:none!important}
+  .scanbeam{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="tick mono">P</span>PERINTIS</a>
+    <nav class="nav-links">
+      <a href="#masalah">Masalah</a><a href="#cara">Cara kerja</a><a href="#fitur">Fitur</a>
+    </nav>
+    <a class="cta" href="app.html">Buka app ↗</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"><span class="sq"></span><b>PERINTIS</b>&nbsp;· kelola keuangan pribadi</div>
+      <h1 class="lead">Foto struk.<br>Sisanya <span class="c">PERINTIS</span><br>yang urus.</h1>
+      <p class="sub">Konsep aplikasi buat ngatur keuangan pribadimu: foto struk, langsung tercatat dan terkategori otomatis. Plus, bisa rekomendasiin kost yang cocok sama kondisi keuanganmu.</p>
+      <div class="actions">
+        <a class="btn btn-coral" href="app.html">▸ Buka aplikasi</a>
+        <a class="link" href="#cara">atau lihat cara kerja →</a>
+      </div>
+      <div class="ledger">
+        <div class="lrow"><span>Scan struk</span><span class="dots"></span><span class="v">otomatis</span></div>
+        <div class="lrow"><span>Buku kas &amp; budget</span><span class="dots"></span><span class="v">real-time</span></div>
+        <div class="lrow"><span>Cari kost</span><span class="dots"></span><span class="v">sesuai keuanganmu</span></div>
+      </div>
+    </div>
+
+    <div class="receipt-wrap reveal">
+      <div class="receipt">
+        <span class="scanbeam"></span>
+        <div class="r-store"><b>PERINTIS</b><span>struk · buku kas otomatis</span></div>
+        <div class="r-meta"><span>18/08/2026</span><span>14:32 WITA</span></div>
+        <hr class="hr" />
+        <div class="ri"><span>Roti Gandum</span><span class="a">12.500</span></div>
+        <div class="ri"><span>Susu UHT 1L</span><span class="a">19.000</span></div>
+        <div class="ri"><span>Kopi Sachet 5s</span><span class="a">16.000</span></div>
+        <div class="ri tot"><span>TOTAL</span><span class="a">47.500</span></div>
+        <div class="cat-block">
+          <div class="scanline">✂ &nbsp;AI membaca &amp; mengategorikan&nbsp; ✂</div>
+          <div class="ri cat"><span>Makanan</span><span class="a">Rp 850rb</span></div>
+          <div class="ri cat"><span>Transportasi</span><span class="a">Rp 220rb</span></div>
+          <div class="ri cat"><span>Utilitas</span><span class="a">Rp 180rb</span></div>
+          <div class="r-total">
+            <div class="big"><span>Sisa uang bulan ini</span><span class="amt">Rp 630.000</span></div>
+            <div class="note">terpantau otomatis · aman</div>
+          </div>
+        </div>
+        <span class="stamp">Aman ✓</span>
+      </div>
+      <div class="receipt-cap">— contoh tampilan —</div>
+    </div>
+  </div>
+</section>
+
+<div class="tear" aria-hidden="true"></div>
+<div class="tear-label">· · · · ·  sobek di sini  · · · · ·</div>
+
+<!-- MASALAH -->
+<section class="sec alignR" id="masalah">
+  <div class="wrap">
+    <div class="divider reveal">01 / <b>Masalah</b></div>
+    <h2 class="reveal">Ngatur uang sendiri itu gampang kelewat.</h2>
+    <p class="intro reveal">Pengeluaran kecil yang nggak kepantau numpuk pelan-pelan, dan pas mau ambil keputusan besar (kayak milih kost) kita sering nggak tau kondisi keuangan sendiri.</p>
+    <div class="tally stagger reveal">
+      <div class="tally-row"><span class="mk">01</span><p><b>Nyatet manual itu ribet</b>, jadi sering ditinggal. Akhirnya nggak kerasa uang habis ke mana.</p></div>
+      <div class="tally-row"><span class="mk">02</span><p><b>Susah jawab "aku sanggup ngekos berapa?"</b> kalau kondisi keuangan sendiri aja nggak jelas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CARA KERJA -->
+<section class="sec carbon alignC" id="cara">
+  <div class="wrap">
+    <div class="divider reveal">02 / <b>Cara kerja</b></div>
+    <h2 class="reveal">Keuangan yang ngatur dirinya sendiri.</h2>
+    <p class="intro reveal">Inti PERINTIS itu ngerapiin uangmu otomatis. Tiap struk yang kamu foto bikin gambaran keuanganmu makin jelas.</p>
+    <div class="flow stagger reveal">
+      <div class="frow"><span class="n">01</span><span class="ft">Foto struk</span><span class="dots"></span><span class="fd">tanpa ketik manual</span></div>
+      <div class="frow"><span class="n">02</span><span class="ft">AI baca &amp; kategorikan</span><span class="dots"></span><span class="fd">OCR + NLP</span></div>
+      <div class="frow"><span class="n">03</span><span class="ft">Keuangan terpantau</span><span class="dots"></span><span class="fd">real-time</span></div>
+      <div class="frow"><span class="n">04</span><span class="ft">Peringatan dini</span><span class="dots"></span><span class="fd">sebelum boros</span></div>
+      <div class="frow"><span class="n">05</span><span class="ft">Split bill</span><span class="dots"></span><span class="fd">buat tagihan patungan</span></div>
+    </div>
+    <div class="reveal"><span class="loopback">★ Bonus: rekomendasi kost berdasarkan kondisi keuanganmu</span></div>
+  </div>
+</section>
+
+<!-- FITUR -->
+<section class="sec" id="fitur">
+  <div class="wrap">
+    <div class="divider reveal">03 / <b>Fitur</b></div>
+    <h2 class="reveal">Semua alat kelola keuangan pribadimu, satu app.</h2>
+    <p class="intro reveal">Buku kas otomatis, peringatan budget, dan split bill jadi intinya. Plus alat bantu cari kost yang nyesuaiin sama keuanganmu.</p>
+    <div class="feat-lead reveal">
+      <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6a2 2 0 0 1 2-2h2M17 4h2a2 2 0 0 1 2 2v3M21 15v3a2 2 0 0 1-2 2h-2M7 20H5a2 2 0 0 1-2-2v-3M7 12h10"/></svg></span>
+      <div>
+        <h3>Scan Struk (OCR)</h3>
+        <p>Pencatatan pasif: cukup foto, sistem baca sendiri. Rencananya pakai OpenCV buat benerin citra dulu, jadi struk kusut atau tinta pudar tetap kebaca.</p>
+        <div class="tags">OpenCV · Tesseract · NLP kategori</div>
+      </div>
+    </div>
+    <div class="flist stagger reveal">
+      <div class="f2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 3 5-7"/></svg></span><span class="nm">Dashboard Keuangan</span><span class="dots"></span><span class="fd">buku kas yang ngisi sendiri</span></div>
+      <div class="f2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 9v4M12 16h.01"/></svg></span><span class="nm">Early Warning</span><span class="dots"></span><span class="fd">biar nggak keburu boros</span></div>
+      <div class="f2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a4 4 0 1 0-8 0M3 21a6 6 0 0 1 12 0M18 13a4.5 4.5 0 0 1 3 7"/></svg></span><span class="nm">Split Bill</span><span class="dots"></span><span class="fd">bagi tagihan patungan</span></div>
+      <div class="f2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg></span><span class="nm">Smart Kost Finder</span><span class="dots"></span><span class="fd">bonus · cocok sama keuanganmu</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec cta-sec carbon">
+  <div class="wrap">
+    <h2 class="reveal">Kelola uangmu tanpa ribet, mulai dari foto struk.</h2>
+    <p class="intro reveal">PERINTIS bikin ngatur keuangan pribadi jadi otomatis, plus bantu milih kost yang beneran cocok sama kondisi keuanganmu.</p>
+    <div class="actions reveal"><a class="btn btn-coral" href="app.html">▸ Buka aplikasi PERINTIS</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="thanks">*** Terima kasih ***</div>
+    <div class="barcode" aria-hidden="true"></div>
+    <div class="foot-meta">
+      <b>PERINTIS</b> · konsep aplikasi keuangan pribadi<br>
+      ide, desain &amp; prototipe oleh Gianne Angely<br>
+      prototipe web · rancangan untuk React Native + AI OCR
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var d=document.documentElement; d.classList.add("js");
+  var mq=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // hero receipt focal on load
+  var hero=document.querySelector(".hero");
+  requestAnimationFrame(function(){setTimeout(function(){hero.classList.add("play")},200)});
+  // scroll reveals + stagger
+  if("IntersectionObserver" in window && !mq){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return; var t=e.target;
+      if(t.classList.contains("stagger")){var k=t.children;for(var i=0;i<k.length;i++){k[i].style.transitionDelay=(i*75)+"ms";}}
+      t.classList.add("in"); io.unobserve(t);
+    })},{threshold:.15,rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".reveal,.stagger").forEach(function(el){io.observe(el)});
+  }else{
+    document.querySelectorAll(".reveal,.stagger").forEach(function(el){el.classList.add("in")});
+  }
+})();
+</script>
+</body>
+</html>
